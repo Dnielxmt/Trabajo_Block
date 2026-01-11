@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema Pedidos B2B</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <style>
+    .pantalla { display: none; margin: 20px; }
+    button { margin: 5px; }
+  </style>
+</head>
+<body>
+
+<!-- Pantalla Login -->
+<div id="pantalla-login" class="pantalla" style="display:block;">
+  <h2>Conectar MetaMask y Contrato</h2>
+  <input type="text" id="direccionContrato" placeholder="Dirección del contrato">
+  <button onclick="conectarContrato()">Conectar</button>
+  <div id="log"></div>
+</div>
+
+<!-- Pantalla Inicio -->
+<div id="pantalla-inicio" class="pantalla">
+  <h2 id="bienvenida"></h2>
+  <div id="opciones-rol"></div>
+  <button onclick="mostrarPantalla('login')">Cerrar sesión</button>
+  <div id="log"></div>
+</div>
+
+<!-- Pantalla Pedidos -->
+<div id="pantalla-pedidos" class="pantalla">
+  <h2>Pedidos</h2>
+  <ul id="pedidosList"></ul>
+  <button onclick="mostrarPantalla('inicio')">Volver</button>
+  <div id="log"></div>
+</div>
+
+<!-- Pantalla Productos -->
+<div id="pantalla-productos" class="pantalla">
+  <h2>Productos</h2>
+  <ul id="productosList"></ul>
+  <button onclick="mostrarPantalla('inicio')">Volver</button>
+  <div id="log"></div>
+</div>
+
+<script src="ideaapp.js"></script>
+</body>
+</html>
