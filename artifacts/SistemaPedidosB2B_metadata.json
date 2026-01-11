@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.31+commit.fd3a2265"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -761,7 +761,7 @@
 		"compilationTarget": {
 			"contracts/BlockContrato.sol": "SistemaPedidosB2B"
 		},
-		"evmVersion": "osaka",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
