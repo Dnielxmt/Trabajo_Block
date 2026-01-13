@@ -201,6 +201,25 @@
 						"type": "uint256"
 					}
 				],
+				"name": "calcularTotalPedido",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_idPedido",
+						"type": "uint256"
+					}
+				],
 				"name": "cancelarPedido",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -394,6 +413,142 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "_proveedor",
+						"type": "address"
+					}
+				],
+				"name": "obtenerPedidosPorProveedor",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "supermercado",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "proveedor",
+								"type": "address"
+							},
+							{
+								"internalType": "enum SistemaPedidosB2B.EstadoPedido",
+								"name": "estado",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "descuentoAplicado",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fechaCreacion",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "idProducto",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "cantidad",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct SistemaPedidosB2B.LineaProducto[]",
+								"name": "productos",
+								"type": "tuple[]"
+							}
+						],
+						"internalType": "struct SistemaPedidosB2B.Pedido[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_supermercado",
+						"type": "address"
+					}
+				],
+				"name": "obtenerPedidosPorSupermercado",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "supermercado",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "proveedor",
+								"type": "address"
+							},
+							{
+								"internalType": "enum SistemaPedidosB2B.EstadoPedido",
+								"name": "estado",
+								"type": "uint8"
+							},
+							{
+								"internalType": "uint256",
+								"name": "descuentoAplicado",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "fechaCreacion",
+								"type": "uint256"
+							},
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "idProducto",
+										"type": "uint256"
+									},
+									{
+										"internalType": "uint256",
+										"name": "cantidad",
+										"type": "uint256"
+									}
+								],
+								"internalType": "struct SistemaPedidosB2B.LineaProducto[]",
+								"name": "productos",
+								"type": "tuple[]"
+							}
+						],
+						"internalType": "struct SistemaPedidosB2B.Pedido[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "_idProducto",
 						"type": "uint256"
@@ -420,6 +575,11 @@
 						"internalType": "uint256",
 						"name": "stock",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "stockSuficiente",
+						"type": "bool"
 					},
 					{
 						"internalType": "address",
@@ -761,7 +921,7 @@
 		"compilationTarget": {
 			"contracts/BlockContrato.sol": "SistemaPedidosB2B"
 		},
-		"evmVersion": "london",
+		"evmVersion": "shanghai",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -774,11 +934,11 @@
 	},
 	"sources": {
 		"contracts/BlockContrato.sol": {
-			"keccak256": "0x1ed25cffd01c610c16cccdf7042ef110bd09690b2ae9817cf7379943387f2d6f",
+			"keccak256": "0xc77c6ac718e682115d241057e1eafffb0ac60e0410af857bd2f64c79a0da9cf4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b52b5389d0524599b0ba6a23ff0126d56d8a86f453e0b61a8f03679fe5b554f1",
-				"dweb:/ipfs/QmYWfXHaw9R1Z8Z2ocnZGokQ59KVXYY1aLJdVtvL2tHu78"
+				"bzz-raw://ba797b70b538092b87ac783b18ce42b32cbb4c2996bfddcf110ccd78ec36acba",
+				"dweb:/ipfs/QmdLoJP3UH66hS2QtCgFP91SZgJz1xmVLACHecowKiNQhE"
 			]
 		}
 	},

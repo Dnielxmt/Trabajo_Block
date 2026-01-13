@@ -294,45 +294,30 @@ contract SistemaPedidosB2B {
     }
 
     // Devuelve la reputación de un proveedor (pedidos completados y cancelados)
-    function obtenerReputacionProveedor(address _proveedor)
-        external
-        view
-        returns (uint256 completados, uint256 cancelados)
-    {
+    function obtenerReputacionProveedor(address _proveedor) external view returns (uint256 completados, uint256 cancelados) {
         ReputacionProveedor storage r = reputacion[_proveedor];
         return (r.pedidosCompletados, r.pedidosCancelados);
     }
 
     // Permite a los supermercados consultar un producto activo por su ID
-    function obtenerProducto(uint256 _idProducto)
-        external
-        view
-        returns (
-            string memory nombre,
-            string memory descripcion,
-            uint256 precio,
-            uint256 stock,
-            address proveedor
-        )
-    {
+    function obtenerProducto(uint256 _idProducto) external view returns (string memory nombre, string memory descripcion, uint256 precio, uint256 stock, bool stockSuficiente, address proveedor){
         Producto storage p = productos[_idProducto];
         require(p.activo, "Producto no disponible");
+
+        bool disponible = p.stockDisponible > 0;
 
         return (
             p.nombre,
             p.descripcion,
             p.precio,
             p.stockDisponible,
+            disponible,
             p.proveedor
         );
     }
 
     // Devuelve todos los productos activos ofrecidos por proveedores
-    function obtenerProductosActivos()
-        external
-        view
-        returns (Producto[] memory)
-    {
+    function obtenerProductosActivos() external view returns (Producto[] memory) {
         uint256 total = contadorProductos;
         uint256 activos = 0;
 
@@ -359,11 +344,7 @@ contract SistemaPedidosB2B {
     }
 
     // Devuelve los productos activos de un proveedor concreto
-    function obtenerProductosPorProveedor(address _proveedor)
-        external
-        view
-        returns (Producto[] memory)
-    {
+    function obtenerProductosPorProveedor(address _proveedor) external view returns (Producto[] memory){
         uint256 total = contadorProductos;
         uint256 cantidad = 0;
 
@@ -392,6 +373,92 @@ contract SistemaPedidosB2B {
         }
 
         return lista;
+    }
+
+    // Obtener pedidos por supermercado para que un supermercado pueda ver su historial de pedidos
+    function obtenerPedidosPorSupermercado(address _supermercado) external view returns (Pedido[] memory){
+        uint256 total = contadorPedidos;
+        uint256 cantidad = 0;
+
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].supermercado == _supermercado) {
+                cantidad++;
+            }
+        }
+
+        Pedido[] memory lista = new Pedido[](cantidad);
+        uint256 index = 0;
+
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].supermercado == _supermercado) {
+                lista[index] = pedidos[i];
+                index++;
+            }
+        }
+
+        return lista;
+    }
+
+    //obtenerPedidosPorProveedor para que el proveedor vea todos los pedidos que ha recibido
+    function obtenerPedidosPorProveedor(address _proveedor) external view returns (Pedido[] memory){
+        uint256 total = contadorPedidos;
+        uint256 cantidad = 0;
+
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].proveedor == _proveedor) {
+                cantidad++;
+            }
+        }
+
+        Pedido[] memory lista = new Pedido[](cantidad);
+        uint256 index = 0;
+
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].proveedor == _proveedor) {
+                lista[index] = pedidos[i];
+                index++;
+            }
+        }
+
+        return lista;
+    }
+
+    // function obtenerPedido(uint256 _idPedido)
+    // external
+    // view
+    // returns (
+    //     address supermercado,
+    //     address proveedor,
+    //     EstadoPedido estado,
+    //     uint256 descuento,
+    //     uint256 fecha,
+    //     LineaProducto[] memory productos){
+        
+    //     Pedido storage p = pedidos[_idPedido];
+
+    //     return (
+    //         p.supermercado,
+    //         p.proveedor,
+    //         p.estado,
+    //         p.descuentoAplicado,
+    //         p.fechaCreacion,
+    //         p.productos
+    //     );
+    // }
+
+    function calcularTotalPedido(uint256 _idPedido) external view returns (uint256 total) {
+        Pedido storage p = pedidos[_idPedido];
+
+        for (uint256 i = 0; i < p.productos.length; i++) {
+            LineaProducto storage lp = p.productos[i];
+            Producto storage prod = productos[lp.idProducto];
+
+            total += prod.precio * lp.cantidad;
+        }
+
+        if (p.descuentoAplicado > 0) {
+            total = total - ((total * p.descuentoAplicado) / 100);
+        }
     }
 
 }
