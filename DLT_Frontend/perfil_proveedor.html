@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil Supermercado</title>
+    <title>Perfil Proveedor</title>
     <style>
         body {
             margin: 0;
@@ -24,7 +24,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* ===== CONTENIDO PRINCIPAL ===== */
+        /* ===== SECCIÓN PRINCIPAL ===== */
         .main {
             flex: 1;
             display: flex;
@@ -32,11 +32,11 @@
             align-items: center;
         }
 
-        /* ===== GRID DE BOTONES ===== */
-        .buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .btn {
@@ -48,7 +48,7 @@
             background-color: #3498db;
             color: white;
             transition: background-color 0.3s, transform 0.2s;
-            min-width: 220px;
+            min-width: 200px;
         }
 
         .btn:hover {
@@ -84,34 +84,27 @@
             text-decoration: underline;
             cursor: pointer;
         }
+
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- SECCIÓN SUPERIOR -->
     <div class="header">
-        <a href="perfil_supermercado.html" class="header-link">
-            Bienvenido supermercado
+        <a href="perfil_proveedor.html" class="header-link">
+            Bienvenido proveedor
         </a>
     </div>
 
     <!-- BOTONES -->
     <div class="main">
-        <div class="buttons-grid">
+        <div class="buttons-container">
             <button class="btn" onclick="location.href='pedidos.html'">
                 🧾 Pedidos
             </button>
 
             <button class="btn" onclick="location.href='productos.html'">
-                🛒 Productos
-            </button>
-
-            <button class="btn" onclick="location.href='carrito.html'">
-                🧺 Carrito
-            </button>
-
-            <button class="btn" onclick="location.href='proveedores.html'">
-                🚚 Proveedores
+                📦 Productos
             </button>
         </div>
     </div>
