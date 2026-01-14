@@ -461,4 +461,114 @@ contract SistemaPedidosB2B {
         }
     }
 
+
+
+    // NUEVAS FUNCIONES PLANAS DE PEDIDOS
+    function obtenerPedidosPorSupermercadoPlano(address _supermercado) external view returns (
+        uint256[] memory ids,
+        address[] memory proveedores,
+        uint256[] memory estados,
+        uint256[] memory descuentos,
+        uint256[] memory fechas
+    ) {
+        uint256 total = contadorPedidos;
+        uint256 cantidad = 0;
+
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].supermercado == _supermercado) cantidad++;
+        }
+
+        ids = new uint256[](cantidad);
+        proveedores = new address[](cantidad);
+        estados = new uint256[](cantidad);
+        descuentos = new uint256[](cantidad);
+        fechas = new uint256[](cantidad);
+
+        uint256 index = 0;
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].supermercado == _supermercado) {
+                Pedido storage p = pedidos[i];
+                ids[index] = p.id;
+                proveedores[index] = p.proveedor;
+                estados[index] = uint256(p.estado);
+                descuentos[index] = p.descuentoAplicado;
+                fechas[index] = p.fechaCreacion;
+                index++;
+            }
+        }
+    }
+
+    function obtenerPedidosPorProveedorPlano(address _proveedor) external view returns (
+        uint256[] memory ids,
+        address[] memory supermercados,
+        uint256[] memory estados,
+        uint256[] memory descuentos,
+        uint256[] memory fechas
+    ) {
+        uint256 total = contadorPedidos;
+        uint256 cantidad = 0;
+
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].proveedor == _proveedor) cantidad++;
+        }
+
+        ids = new uint256[](cantidad);
+        supermercados = new address[](cantidad);
+        estados = new uint256[](cantidad);
+        descuentos = new uint256[](cantidad);
+        fechas = new uint256[](cantidad);
+
+        uint256 index = 0;
+        for (uint256 i = 1; i <= total; i++) {
+            if (pedidos[i].proveedor == _proveedor) {
+                Pedido storage p = pedidos[i];
+                ids[index] = p.id;
+                supermercados[index] = p.supermercado;
+                estados[index] = uint256(p.estado);
+                descuentos[index] = p.descuentoAplicado;
+                fechas[index] = p.fechaCreacion;
+                index++;
+            }
+        }
+    }
+
+
+
+
+
+    function obtenerDetallePedido(uint256 _idPedido)
+        external
+        view
+        returns (
+            address supermercado,
+            address proveedor,
+            uint256 estado,
+            uint256 descuento,
+            uint256 fecha,
+            uint256[] memory idsProductos,
+            uint256[] memory cantidades
+        )
+    {
+        Pedido storage p = pedidos[_idPedido];
+
+        uint256 len = p.productos.length;
+        idsProductos = new uint256[](len);
+        cantidades = new uint256[](len);
+
+        for (uint256 i = 0; i < len; i++) {
+            idsProductos[i] = p.productos[i].idProducto;
+            cantidades[i] = p.productos[i].cantidad;
+        }
+
+        return (
+            p.supermercado,
+            p.proveedor,
+            uint256(p.estado),
+            p.descuentoAplicado,
+            p.fechaCreacion,
+            idsProductos,
+            cantidades
+        );
+    }
+
 }

@@ -398,6 +398,55 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_idPedido",
+						"type": "uint256"
+					}
+				],
+				"name": "obtenerDetallePedido",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "supermercado",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "proveedor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "estado",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "descuento",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fecha",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "idsProductos",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "cantidades",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "obtenerNumeroPedidos",
 				"outputs": [
@@ -482,6 +531,45 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "_proveedor",
+						"type": "address"
+					}
+				],
+				"name": "obtenerPedidosPorProveedorPlano",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "ids",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "supermercados",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "estados",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "descuentos",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "fechas",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "_supermercado",
 						"type": "address"
 					}
@@ -541,6 +629,45 @@
 						"internalType": "struct SistemaPedidosB2B.Pedido[]",
 						"name": "",
 						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_supermercado",
+						"type": "address"
+					}
+				],
+				"name": "obtenerPedidosPorSupermercadoPlano",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "ids",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "address[]",
+						"name": "proveedores",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "estados",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "descuentos",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "fechas",
+						"type": "uint256[]"
 					}
 				],
 				"stateMutability": "view",
@@ -921,7 +1048,7 @@
 		"compilationTarget": {
 			"contracts/BlockContrato.sol": "SistemaPedidosB2B"
 		},
-		"evmVersion": "shanghai",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -934,11 +1061,11 @@
 	},
 	"sources": {
 		"contracts/BlockContrato.sol": {
-			"keccak256": "0xc77c6ac718e682115d241057e1eafffb0ac60e0410af857bd2f64c79a0da9cf4",
+			"keccak256": "0xb37ca9577e92c52fc297999a2258127d7da9e9b215717d837c853a62b5a16668",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ba797b70b538092b87ac783b18ce42b32cbb4c2996bfddcf110ccd78ec36acba",
-				"dweb:/ipfs/QmdLoJP3UH66hS2QtCgFP91SZgJz1xmVLACHecowKiNQhE"
+				"bzz-raw://ecb71325d6ab9073d6185e8c8ec6b8503f9ec6674772016260c67ebb33d8f4e3",
+				"dweb:/ipfs/QmWrHYCp6XVHBFi96s8X27kx8WPz2V9CFXfDT7sDXtTiv2"
 			]
 		}
 	},
