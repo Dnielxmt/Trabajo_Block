@@ -1,3 +1,0 @@
-const PROVEEDORES = [
-    "0x4543A28fad8bf4d9f7ca931aD39d74Aa6E6028FF"
-];
