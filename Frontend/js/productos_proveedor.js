@@ -140,6 +140,9 @@ document.getElementById("confirmarPedido").addEventListener("click", async () =>
         alert("✅ Pedido creado con éxito!");
         carrito = [];
         actualizarCarritoUI();
+        
+        await cargarProductosProveedor();
+
     } catch (err) {
         console.error("Error creando pedido:", err);
         alert("❌ Error creando pedido. Mira la consola.");

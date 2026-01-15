@@ -8,6 +8,8 @@ let contrato;
 const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
 
 async function conectar() {
+    if (contrato) return; // ⬅ ya conectado
+
     if (!window.ethereum) {
         alert("⚠️ Instala Metamask para usar esta DApp");
         return;

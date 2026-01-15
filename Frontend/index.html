@@ -5,11 +5,6 @@
 <title>DApp B2B Supermercados-Proveedores</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
 <link rel="stylesheet" href="css/styles.css">
-
-<style>
-body { font-family: Arial; margin: 20px; }
-button { margin: 5px; padding: 10px; cursor: pointer; }
-</style>
 </head>
 <body>
 
@@ -17,54 +12,31 @@ button { margin: 5px; padding: 10px; cursor: pointer; }
 <p id="cuenta">Conectando a Metamask...</p>
 
 <div>
-    <button onclick="irA('proveedores.html')">📦 Proveedores</button>
-    <button onclick="irA('productos.html')">🛒 Productos</button>
-    <!-- <button onclick="irA('carrito.html')">Carrito</button> -->
-    <button onclick="irA('pedidos.html')"> 📋 Mis Pedidos</button>
+    <button onclick="location.href='proveedores.html'">📦 Proveedores</button>
+    <button onclick="location.href='productos.html'">🛒 Productos</button>
+    <button onclick="location.href='pedidos.html'">📋 Mis Pedidos</button>
 </div>
 
-<!-- <script src="js/abi.js"></script>
+<!-- ORDEN CRÍTICO -->
+<script src="js/abi.js"></script>
 <script src="js/web3.js"></script>
-<script src="js/contrato.js"></script> -->
+<script src="js/contrato.js"></script>
+
 <script>
-// ---------------- VARIABLES GLOBALES ----------------
-let provider, signer, cuentaActual, contrato;
+window.onload = async () => {
+    await conectar();
 
-// ---------------- DIRECCIÓN Y ABI DEL CONTRATO ----------------
-const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
-// const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
-
-// ---------------- FUNCIONES ----------------
-async function conectar() {
-    if (!window.ethereum) {
-        alert("⚠️ Instala Metamask para usar esta DApp");
+    if (!cuentaActual) {
+        document.getElementById("cuenta").innerText =
+            "No conectado";
         return;
     }
 
-    try {
-        // Conectar Metamask
-        provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        signer = await provider.getSigner();
-        cuentaActual = await signer.getAddress();
-        document.getElementById("cuenta").innerText = "Conectado como: " + cuentaActual;
+    document.getElementById("cuenta").innerText =
+        "Conectado como: " + cuentaActual;
 
-        // Inicializar contrato
-        contrato = new ethers.Contract(direccionContrato, abi, signer);
-        console.log("Contrato listo:", contrato);
-
-    } catch (err) {
-        console.error(err);
-        document.getElementById("cuenta").innerText = "No se pudo conectar a Metamask";
-    }
-}
-
-function irA(pagina) {
-    window.location.href = pagina;
-}
-
-// ---------------- INICIALIZAR ----------------
-window.onload = conectar;
+    console.log("¿Proveedor?", await esProveedor());
+};
 </script>
 
 </body>

@@ -89,3 +89,70 @@ button:disabled {
     button:disabled { background-color: #ccc; cursor: not-allowed; }
     #carrito { margin-top: 30px; border-top: 2px solid #ddd; padding-top: 20px; }
     .carrito-item { margin-bottom: 10px; }
+
+
+.pedido-tarjeta {
+    background: #fefefe;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.pedido-tarjeta:hover {
+    transform: scale(1.02);
+}
+
+.pedido-tarjeta h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.pedido-tarjeta p {
+    margin: 4px 0;
+    color: #555;
+}
+
+.pedido-tarjeta ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 8px 0;
+}
+
+.pedido-tarjeta li {
+    background: #f9f9f9;
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.pedido-tarjeta li span {
+    font-weight: 500;
+}
+
+.total-pedido {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+/* Estados del pedido */
+.estado-pedido {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 8px;
+    color: white;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.estado-Pendiente { background-color: #fbbc04; }  /* amarillo */
+.estado-Enviado   { background-color: #1a73e8; }  /* azul */
+.estado-Recibido  { background-color: #34a853; }  /* verde */
+.estado-Cancelado { background-color: #ea4335; }  /* rojo */
