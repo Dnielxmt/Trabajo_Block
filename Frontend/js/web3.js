@@ -5,7 +5,8 @@ let cuentaActual;
 let contrato;
 
 // const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
-const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
+// const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
+const direccionContrato = "0xba3F548AADc6F9A3FBcEC3E8Fd2c0848c047b1eC";
 
 async function conectar() {
     if (contrato) return; // ⬅ ya conectado
