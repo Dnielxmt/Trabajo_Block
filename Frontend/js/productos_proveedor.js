@@ -5,7 +5,7 @@ let carrito = [];
 let proveedorSeleccionado;
 
 // const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
-const direccionContrato = "0x0eaaf6bdCCE16ccd228880a54B0e67124d731693";
+const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
 
 // ---------- Conexión a Metamask ----------
 async function conectar() {
@@ -140,6 +140,9 @@ document.getElementById("confirmarPedido").addEventListener("click", async () =>
         alert("✅ Pedido creado con éxito!");
         carrito = [];
         actualizarCarritoUI();
+        
+        await cargarProductosProveedor();
+
     } catch (err) {
         console.error("Error creando pedido:", err);
         alert("❌ Error creando pedido. Mira la consola.");
