@@ -5,7 +5,10 @@ let carrito = [];
 let proveedorSeleccionado;
 
 // const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
-const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
+// const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
+const direccionContrato = "0xba3F548AADc6F9A3FBcEC3E8Fd2c0848c047b1eC";
+
+const ETH_TO_EURO = 1; // Ajusta según la tasa de conversión
 
 // ---------- Conexión a Metamask ----------
 async function conectar() {
@@ -47,6 +50,7 @@ async function cargarProductosProveedor() {
                 <p>Precio: ${precio.toString()} wei</p>
                 <p>Stock: ${stock.toString()}</p>
                 <div>
+                    <input type="number" min="1" max="${stock}" value="1" style="width:50px" class="cantidad-input">
                     <button ${stock === 0n ? "disabled" : ""} data-id="${p.id}" data-nombre="${p.nombre}" data-precio="${precio}" data-stock="${stock}">
                         Añadir al carrito
                     </button>
@@ -63,7 +67,13 @@ async function cargarProductosProveedor() {
                 const precio = BigInt(btn.dataset.precio);
                 const stock = BigInt(btn.dataset.stock);
 
-                añadirAlCarrito({id, nombre, precio, stock});
+                // Leer cantidad del input
+                const input = btn.parentElement.querySelector(".cantidad-input");
+                let cantidad = BigInt(input.value);
+                if (cantidad < 1n) cantidad = 1n;
+                if (cantidad > stock) cantidad = stock;
+
+                añadirAlCarrito({id, nombre, precio, stock, cantidad});
             });
         });
 
@@ -73,42 +83,82 @@ async function cargarProductosProveedor() {
     }
 }
 
-// ---------- Carrito ----------
+// ---------- Carrito con tabla ----------
 function añadirAlCarrito(producto) {
     const index = carrito.findIndex(p => p.id === producto.id);
-    if(index >= 0) {
-        if(carrito[index].cantidad < producto.stock) {
-            carrito[index].cantidad++;
+    if (index >= 0) {
+        if (carrito[index].cantidad + producto.cantidad <= producto.stock) {
+            carrito[index].cantidad += producto.cantidad;
         } else {
-            alert("❌ No puedes añadir más de este producto (stock limitado)");
+            carrito[index].cantidad = producto.stock;
+            alert("❌ Se ha limitado la cantidad al stock disponible");
         }
     } else {
-        carrito.push({...producto, cantidad: 1});
+        carrito.push({...producto});
     }
     actualizarCarritoUI();
 }
 
-function actualizarCarritoUI() {
+async function actualizarCarritoUI() {
     const cont = document.getElementById("carrito");
     cont.innerHTML = "";
 
-    if(carrito.length === 0) {
+    if (carrito.length === 0) {
         cont.innerHTML = "<p>El carrito está vacío.</p>";
         document.getElementById("vaciarCarrito").disabled = true;
         document.getElementById("confirmarPedido").disabled = true;
         return;
     }
 
+    // Crear tabla
+    const tabla = document.createElement("table");
+    tabla.style.width = "100%";
+    tabla.style.borderCollapse = "collapse";
+    tabla.innerHTML = `
+        <thead>
+            <tr>
+                <th style="text-align:left; border-bottom:1px solid #ddd;">Producto</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Cantidad</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Precio unitario (wei)</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Subtotal (wei)</th>
+                <th style="border-bottom:1px solid #ddd;"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+    const tbody = tabla.querySelector("tbody");
+    let totalCarrito = 0n;
+
     carrito.forEach(p => {
-        const item = document.createElement("div");
-        item.className = "carrito-item";
-        item.innerHTML = `
-            ${p.nombre} - Cantidad: ${p.cantidad} - Precio: ${(p.precio * BigInt(p.cantidad)).toString()} wei
-            <button data-id="${p.id}">Eliminar</button>
+        const subtotal = p.precio * BigInt(p.cantidad);
+        totalCarrito += subtotal;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${p.nombre}</td>
+            <td style="text-align:right;">${p.cantidad}</td>
+            <td style="text-align:right;">${p.precio}</td>
+            <td style="text-align:right;">${subtotal}</td>
+            <td style="text-align:center;"><button data-id="${p.id}">❌</button></td>
         `;
-        cont.appendChild(item);
+        tbody.appendChild(tr);
     });
 
+    cont.appendChild(tabla);
+
+    // Total carrito
+    const totalDiv = document.createElement("div");
+    totalDiv.style.marginTop = "10px";
+    totalDiv.style.fontWeight = "bold";
+
+    // Si quieres, aquí podrías obtener el total real del contrato:
+    // const totalConDescuento = await contrato.calcularTotalPedidoParaProveedor(proveedorSeleccionado);
+    totalDiv.innerHTML = `
+        Total carrito: ${totalCarrito.toString()} wei (~${(Number(ethers.formatEther(totalCarrito)) * ETH_TO_EURO).toFixed(2)} €)
+    `;
+    cont.appendChild(totalDiv);
+
+    // Botones eliminar producto de la tabla
     cont.querySelectorAll("button").forEach(btn => {
         btn.addEventListener("click", () => {
             const id = BigInt(btn.dataset.id);
@@ -121,15 +171,15 @@ function actualizarCarritoUI() {
     document.getElementById("confirmarPedido").disabled = false;
 }
 
-// Vaciar carrito
+// ---------- Vaciar carrito ----------
 document.getElementById("vaciarCarrito").addEventListener("click", () => {
     carrito = [];
     actualizarCarritoUI();
 });
 
-// Confirmar pedido
+// ---------- Confirmar pedido ----------
 document.getElementById("confirmarPedido").addEventListener("click", async () => {
-    if(carrito.length === 0) return alert("Carrito vacío");
+    if (carrito.length === 0) return alert("Carrito vacío");
 
     const ids = carrito.map(p => p.id);
     const cantidades = carrito.map(p => BigInt(p.cantidad));
@@ -140,7 +190,7 @@ document.getElementById("confirmarPedido").addEventListener("click", async () =>
         alert("✅ Pedido creado con éxito!");
         carrito = [];
         actualizarCarritoUI();
-        
+
         await cargarProductosProveedor();
 
     } catch (err) {
@@ -154,7 +204,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     proveedorSeleccionado = params.get("prov");
 
-    if(!proveedorSeleccionado) return alert("No se ha seleccionado un proveedor.");
+    if (!proveedorSeleccionado) return alert("No se ha seleccionado un proveedor.");
 
     await conectar();
     await cargarProductosProveedor();

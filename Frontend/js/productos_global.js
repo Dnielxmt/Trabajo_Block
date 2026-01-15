@@ -1,9 +1,11 @@
 // js/productos_global.js
 let carrito = [];
+const WEI_A_EURO = 1; // Ajusta según el precio del ether. 1 wei ≈ 2e-6 € aprox
+
 
 // ---------- Conexión ----------
 async function conectarYCargar() {
-    await conectar(); // proveedor de web3.js
+    await conectar(); // función de web3.js que inicializa provider, signer y contrato
     await cargarProductosGlobales();
 }
 
@@ -27,6 +29,7 @@ async function cargarProductosGlobales() {
             <p>Precio: ${precio.toString()} wei</p>
             <p>Stock: ${stock.toString()}</p>
             <div>
+                <input type="number" min="1" max="${stock}" value="1" style="width:50px" data-id="${p.id}" data-proveedor="${p.proveedor}" class="cantidad-input">
                 <button ${stock === 0n ? "disabled" : ""} 
                         data-id="${p.id}" 
                         data-nombre="${p.nombre}" 
@@ -49,7 +52,13 @@ async function cargarProductosGlobales() {
             const stock = BigInt(btn.dataset.stock);
             const proveedor = btn.dataset.proveedor;
 
-            añadirAlCarrito({id, nombre, precio, stock, proveedor});
+            // Leer cantidad del input
+            const input = btn.parentElement.querySelector(".cantidad-input");
+            let cantidad = BigInt(input.value);
+            if (cantidad < 1n) cantidad = 1n;
+            if (cantidad > stock) cantidad = stock;
+
+            añadirAlCarrito({id, nombre, precio, stock, proveedor, cantidad});
         });
     });
 }
@@ -58,17 +67,20 @@ async function cargarProductosGlobales() {
 function añadirAlCarrito(producto) {
     const index = carrito.findIndex(p => p.id === producto.id && p.proveedor === producto.proveedor);
     if (index >= 0) {
-        if (carrito[index].cantidad < producto.stock) {
-            carrito[index].cantidad++;
+        // Sumar cantidad respetando stock
+        if (carrito[index].cantidad + producto.cantidad <= producto.stock) {
+            carrito[index].cantidad += producto.cantidad;
         } else {
-            alert("❌ No puedes añadir más de este producto (stock limitado)");
+            carrito[index].cantidad = producto.stock;
+            alert("❌ Se ha limitado la cantidad al stock disponible");
         }
     } else {
-        carrito.push({...producto, cantidad: 1});
+        carrito.push({...producto});
     }
     actualizarCarritoUI();
 }
 
+// ---------- Actualizar carrito UI estilo pedidos.js ----------
 function actualizarCarritoUI() {
     const cont = document.getElementById("carrito");
     cont.innerHTML = "";
@@ -80,17 +92,79 @@ function actualizarCarritoUI() {
         return;
     }
 
+    // Crear tarjeta tipo pedido-tarjeta
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "pedido-tarjeta";
+    tarjeta.style.border = "1px solid #ddd";
+    tarjeta.style.borderRadius = "12px";
+    tarjeta.style.padding = "18px";
+    tarjeta.style.marginBottom = "18px";
+    tarjeta.style.background = "#fcfcfc";
+    tarjeta.style.boxShadow = "0 2px 6px rgba(0,0,0,0.05)";
+    tarjeta.style.transition = "all 0.3s";
+    tarjeta.onmouseover = () => tarjeta.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
+    tarjeta.onmouseout = () => tarjeta.style.boxShadow = "0 2px 6px rgba(0,0,0,0.05)";
+
+    tarjeta.innerHTML = `
+        <h3 style="margin-bottom:5px;">Carrito global</h3>
+        <div class="productos"></div>
+        <div class="totales" style="margin-top:10px;"></div>
+    `;
+    cont.appendChild(tarjeta);
+
+    const productosDiv = tarjeta.querySelector(".productos");
+    const totalesDiv = tarjeta.querySelector(".totales");
+
+    // Tabla de productos
+    const tabla = document.createElement("table");
+    tabla.style.width = "100%";
+    tabla.style.borderCollapse = "collapse";
+    tabla.innerHTML = `
+        <thead>
+            <tr>
+                <th style="text-align:left; border-bottom:1px solid #ddd;">Producto</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Proveedor</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Cantidad</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Precio €</th>
+                <th style="text-align:right; border-bottom:1px solid #ddd;">Subtotal €</th>
+                <th style="text-align:center; border-bottom:1px solid #ddd;">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+    const tbody = tabla.querySelector("tbody");
+
+    let totalWei = 0n;
+
     carrito.forEach(p => {
-        const item = document.createElement("div");
-        item.className = "carrito-item";
-        item.innerHTML = `
-            ${p.nombre} - Cantidad: ${p.cantidad} - Precio: ${(p.precio * BigInt(p.cantidad)).toString()} wei
-            <button data-id="${p.id}" data-proveedor="${p.proveedor}">Eliminar</button>
+        const subtotalWei = p.precio * BigInt(p.cantidad);
+        const subtotalEuros = Number(subtotalWei) * WEI_A_EURO;
+        totalWei += subtotalWei;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${p.nombre}</td>
+            <td style="text-align:right;">${p.proveedor}</td>
+            <td style="text-align:right;">${p.cantidad}</td>
+            <td style="text-align:right;">${(Number(p.precio) * WEI_A_EURO).toFixed(2)} €</td>
+            <td style="text-align:right;">${subtotalEuros.toFixed(2)} €</td>
+            <td style="text-align:center;"><button data-id="${p.id}" data-proveedor="${p.proveedor}">❌</button></td>
         `;
-        cont.appendChild(item);
+        tbody.appendChild(tr);
     });
 
-    cont.querySelectorAll("button").forEach(btn => {
+    productosDiv.appendChild(tabla);
+
+    // Totales
+    const totalEuros = Number(totalWei) * WEI_A_EURO;
+
+    totalesDiv.innerHTML = `
+        <p><strong>Total global (aprox):</strong> ${totalEuros.toFixed(2)} €</p>
+        <p><em>Los totales exactos se calcularán por proveedor al confirmar el pedido</em></p>
+    `;
+
+    // Eventos botones eliminar
+    productosDiv.querySelectorAll("button").forEach(btn => {
         btn.addEventListener("click", () => {
             const id = BigInt(btn.dataset.id);
             const proveedor = btn.dataset.proveedor;
@@ -102,6 +176,7 @@ function actualizarCarritoUI() {
     document.getElementById("vaciarCarrito").disabled = false;
     document.getElementById("confirmarPedido").disabled = false;
 }
+
 
 // ---------- Vaciar carrito ----------
 document.getElementById("vaciarCarrito").addEventListener("click", () => {
