@@ -1,0 +1,3 @@
+const PROVEEDORES = [
+    "0xb6b4e16e5BEceA103284fA960f150EF6f09f3595"
+];
