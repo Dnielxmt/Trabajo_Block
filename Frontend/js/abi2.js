@@ -354,25 +354,6 @@ const ABI_SISTEMA_PEDIDOS = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idPedido",
-				"type": "uint256"
-			}
-		],
-		"name": "calcularTotalSinDescuento",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "total",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "contadorPedidos",
 		"outputs": [
@@ -431,55 +412,6 @@ const ABI_SISTEMA_PEDIDOS = [
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idPedido",
-				"type": "uint256"
-			}
-		],
-		"name": "obtenerDetallePedido",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "supermercado",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "proveedor",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "estado",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "descuento",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "fecha",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "idsProductos",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "cantidades",
-				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
