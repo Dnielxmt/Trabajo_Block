@@ -47,9 +47,9 @@ function obtenerPedidosPorProveedor(address _proveedor) external view returns (P
 
 #### 2.2 Supermercado
 - **Pedidos**
-    - Crear pedidos (`crearPedido`)
+    - ~~Crear pedidos (`crearPedido`)~~
     - Cancelar pedidos (`cancelarPedido`)
-    - Consultar pedidos del supermercado
+    - ~~Consultar pedidos del supermercado~~
     - (`Opcional`) Modificar pedidos → actualmente no implementado en contrato
 
 - **Proveedores**
@@ -97,9 +97,9 @@ function obtenerPedidosPorProveedor(address _proveedor) external view returns (P
   - Crear / Modificar / Eliminar productos
   - Consultar pedidos asignados
 - **Supermercado:**
-  - Crear / Cancelar pedidos
-  - Consultar proveedores + productos
-  - Consultar pedidos
+  - ~~Crear / Cancelar pedidos~~
+  - ~~Consultar proveedores + productos~~
+  - ~~Consultar pedidos~~
 
 #### Pantalla de logs
 - Mostrar todas las transacciones recientes
