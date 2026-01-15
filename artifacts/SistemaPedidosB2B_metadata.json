@@ -220,6 +220,25 @@
 						"type": "uint256"
 					}
 				],
+				"name": "calcularTotalSinDescuento",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "total",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_idPedido",
+						"type": "uint256"
+					}
+				],
 				"name": "cancelarPedido",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -1061,11 +1080,11 @@
 	},
 	"sources": {
 		"contracts/BlockContrato.sol": {
-			"keccak256": "0xb37ca9577e92c52fc297999a2258127d7da9e9b215717d837c853a62b5a16668",
+			"keccak256": "0x1c3567216adeef7b556e96661a51cd7d7c5ddf14a4695d0ef24e3a406680565b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ecb71325d6ab9073d6185e8c8ec6b8503f9ec6674772016260c67ebb33d8f4e3",
-				"dweb:/ipfs/QmWrHYCp6XVHBFi96s8X27kx8WPz2V9CFXfDT7sDXtTiv2"
+				"bzz-raw://ed3932d00a51eae0d4c29867933f66cf4e6c8fc7745a9f4124e20b162a8661fd",
+				"dweb:/ipfs/QmUgBCgEt77JmG3WdwZ646RNAuM6CjQ5gj25uU5jD6pVBs"
 			]
 		}
 	},
