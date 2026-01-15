@@ -91,7 +91,7 @@ contract SistemaPedidosB2B {
     uint256 public contadorProductos;
 
     // Política de descuentos para pedidos de gran volumen
-    uint256 public umbralGranVolumen = 1000;
+    uint256 public umbralGranVolumen = 10;
     uint256 public porcentajeDescuento = 5;
 
     // Almacenan pedidos, productos y reputación de proveedores    
@@ -234,6 +234,9 @@ contract SistemaPedidosB2B {
             require(prod.activo, "Producto inactivo");
             require(prod.stockDisponible >= _cantidades[i], "Stock insuficiente");
 
+            // DESCONTAR EL STOCK
+            prod.stockDisponible -= _cantidades[i];
+
             totalCantidad += _cantidades[i];
 
             p.productos.push(
@@ -277,6 +280,12 @@ contract SistemaPedidosB2B {
         Pedido storage p = pedidos[_idPedido];
         require(p.supermercado == msg.sender, "No autorizado");
         require(p.estado == EstadoPedido.Pendiente, "No se puede cancelar");
+
+        // Reponer stock
+        for (uint256 i = 0; i < p.productos.length; i++) {
+            Producto storage prod = productos[p.productos[i].idProducto];
+            prod.stockDisponible += p.productos[i].cantidad;
+        }
 
         p.estado = EstadoPedido.Cancelado;
         reputacion[p.proveedor].pedidosCancelados++;
@@ -460,6 +469,18 @@ contract SistemaPedidosB2B {
             total = total - ((total * p.descuentoAplicado) / 100);
         }
     }
+
+    function calcularTotalSinDescuento(uint256 _idPedido) external view returns (uint256 total) {
+        Pedido storage p = pedidos[_idPedido];
+
+        for (uint256 i = 0; i < p.productos.length; i++) {
+            LineaProducto storage lp = p.productos[i];
+            Producto storage prod = productos[lp.idProducto];
+
+            total += prod.precio * lp.cantidad;
+        }
+    }
+
 
 
 
