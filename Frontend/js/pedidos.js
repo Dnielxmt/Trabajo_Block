@@ -1,7 +1,7 @@
 // js/pedidos.js
 
 window.addEventListener("DOMContentLoaded", async () => {
-    await conectar();
+    await conectar(); // Conecta Metamask y el contrato
     await mostrarMisPedidos();
 });
 
@@ -10,7 +10,7 @@ const coloresEstado = ["🟡 Pendiente", "🔵 Enviado", "🟢 Recibido", "🔴 
 
 async function mostrarMisPedidos() {
     try {
-        const cuentaActual = window.ethereum.selectedAddress
+        const cuentaActual = window.ethereum.selectedAddress;
 
         let resultado;
 
@@ -179,6 +179,39 @@ async function mostrarMisPedidos() {
                     }
                 };
                 accionesDiv.appendChild(btnEnviado);
+            }
+
+            // ------------------ Botón Cancelar pedido ------------------
+            if ((esSuper || esProv) && estado === 0) { // Pendiente
+                const btnCancelar = document.createElement("button");
+                btnCancelar.innerText = "❌ Cancelar";
+                btnCancelar.style.position = "absolute";
+                btnCancelar.style.bottom = "10px";
+                btnCancelar.style.right = "10px";
+                btnCancelar.style.backgroundColor = "red";
+                btnCancelar.style.color = "white";
+                btnCancelar.style.border = "none";
+                btnCancelar.style.borderRadius = "6px";
+                btnCancelar.style.padding = "5px 10px";
+                btnCancelar.style.cursor = "pointer";
+
+                btnCancelar.onclick = async () => {
+                    if (!confirm("¿Seguro que quieres cancelar este pedido?")) return;
+
+                    try {
+                        const tx = await contrato.cancelarPedido(pId);
+                        await tx.wait();
+                        alert("✅ Pedido cancelado correctamente");
+                        await mostrarMisPedidos();
+                    } catch (err) {
+                        console.error("Error cancelando pedido:", err);
+                        alert("❌ Error cancelando pedido. Mira la consola.");
+                    }
+                };
+
+                // Necesitamos que la tarjeta tenga position: relative para posicionar el botón
+                tarjeta.style.position = "relative";
+                tarjeta.appendChild(btnCancelar);
             }
         }
 
