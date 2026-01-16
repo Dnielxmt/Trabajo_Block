@@ -1,7 +1,8 @@
 let proveedorActual;
 
 window.addEventListener("DOMContentLoaded", async () => {
-    await conectar(); // Conecta wallet y contrato
+    await conectar();
+    const cuentaActual = await signer.getAddress();
     proveedorActual = cuentaActual;
     document.getElementById("cuenta").innerText = "Conectado como: " + proveedorActual;
 
