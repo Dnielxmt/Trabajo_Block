@@ -47,7 +47,7 @@ async function conectar() {
         provider = new ethers.BrowserProvider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
         signer = await provider.getSigner();
-        cuentaActual = await signer.getAddress();
+        cuentaActual = window.ethereum.selectedAddress
         document.getElementById("cuenta").innerText = "Conectado como: " + cuentaActual;
 
         // Inicializar contrato

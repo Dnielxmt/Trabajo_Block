@@ -10,7 +10,7 @@ const coloresEstado = ["🟡 Pendiente", "🔵 Enviado", "🟢 Recibido", "🔴 
 
 async function mostrarMisPedidos() {
     try {
-        const cuentaActual = await signer.getAddress();
+        const cuentaActual = window.ethereum.selectedAddress
 
         let resultado;
 

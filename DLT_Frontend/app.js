@@ -38,7 +38,7 @@ connectButton.onclick = async () => {
     await window.ethereum.request({ method: "eth_requestAccounts" });
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
-    const cuenta = await signer.getAddress();
+    const cuenta = window.ethereum.selectedAddress
     status.innerText = "Conectado: " + cuenta;
     log("✅ Conectado a MetaMask con cuenta: " + cuenta);
 

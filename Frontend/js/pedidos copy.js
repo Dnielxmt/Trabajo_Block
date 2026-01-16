@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 async function mostrarMisPedidos() {
     try {
-        const cuentaActual = await signer.getAddress();
+        const cuentaActual = window.ethereum.selectedAddress
         console.warn("cuentaActual", cuentaActual);
 
         let resultado;

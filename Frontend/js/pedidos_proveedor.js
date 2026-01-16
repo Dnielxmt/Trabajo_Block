@@ -9,7 +9,7 @@ const coloresEstado = ["🟡 Pendiente", "🔵 Enviado", "🟢 Recibido", "🔴 
 
 async function mostrarPedidosProveedor() {
     try {
-        const cuentaActual = await signer.getAddress();
+        const cuentaActual = window.ethereum.selectedAddress
         const esProv = await contrato.esProveedor(cuentaActual);
 
         if (!esProv) {

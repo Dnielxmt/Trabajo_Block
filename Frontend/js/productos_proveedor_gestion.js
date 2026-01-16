@@ -2,7 +2,7 @@ let proveedorActual;
 
 window.addEventListener("DOMContentLoaded", async () => {
     await conectar();
-    const cuentaActual = await signer.getAddress();
+    const cuentaActual = window.ethereum.selectedAddress
     proveedorActual = cuentaActual;
     document.getElementById("cuenta").innerText = "Conectado como: " + proveedorActual;
 

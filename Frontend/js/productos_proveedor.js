@@ -6,7 +6,7 @@ let proveedorSeleccionado;
 
 // const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
 // const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
-const direccionContrato = "0xba3F548AADc6F9A3FBcEC3E8Fd2c0848c047b1eC";
+const direccionContrato = "0x85E7f2Df79f7EE589602c72505Ed3Cf9F82A5210";
 
 const ETH_TO_EURO = 1; // Ajusta según la tasa de conversión
 
@@ -18,7 +18,7 @@ async function conectar() {
         provider = new ethers.BrowserProvider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
         signer = await provider.getSigner();
-        cuentaActual = await signer.getAddress();
+        cuentaActual = window.ethereum.selectedAddress
         document.getElementById("cuenta").innerText = "Conectado como: " + cuentaActual;
 
         contrato = new ethers.Contract(direccionContrato, ABI_SISTEMA_PEDIDOS, signer);

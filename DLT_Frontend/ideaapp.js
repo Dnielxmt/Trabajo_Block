@@ -42,7 +42,7 @@ async function conectarContrato() {
     provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     signer = provider.getSigner();
-    usuario = await signer.getAddress();
+    usuario = window.ethereum.selectedAddress
 
     log(`🔹 Cuenta conectada: ${usuario}\n⏳ Conectando al contrato...`);
 
