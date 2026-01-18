@@ -6,7 +6,15 @@ let proveedorSeleccionado;
 
 // const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
 // const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
-const direccionContrato = "0x85E7f2Df79f7EE589602c72505Ed3Cf9F82A5210";
+// const direccionContrato = "0x85E7f2Df79f7EE589602c72505Ed3Cf9F82A5210";
+// const direccionContrato = sessionStorage.getItem("direccionContrato");
+const direccionContrato = sessionStorage.getItem("direccionContrato");
+// console.log("🔹 Dirección del contrato desde sesión:", direccionContrato);
+// if (!direccionContrato || !ethers.utils.isAddress(direccionContrato)) {
+//     alert("No hay contrato guardado. Vuelve al login.");
+//     window.location.href = "login.html";
+//     return;
+// }
 
 const ETH_TO_EURO = 1; // Ajusta según la tasa de conversión
 

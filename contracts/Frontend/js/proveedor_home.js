@@ -1,7 +1,7 @@
 // js/proveedor_home.js
 
 (async function () {
-    const direccionContrato = "0x85E7f2Df79f7EE589602c72505Ed3Cf9F82A5210";
+    const direccionContrato = sessionStorage.getItem("direccionContrato");
 
     if (!window.ethereum) {
         alert("⚠️ Instala MetaMask");

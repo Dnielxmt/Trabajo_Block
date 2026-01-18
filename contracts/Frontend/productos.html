@@ -2,23 +2,31 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mis Pedidos - Proveedor</title>
+<title>Productos</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
 <link rel="stylesheet" href="css/styles.css">
-<script src="js/abi.js"></script>
 </head>
+<!-- <body data-rol="Supermercado"> -->
 <body>
 
-<h1>📋 Pedidos Asignados</h1>
+
+<h1>🛒 Todos los productos</h1>
+
 <p id="cuenta">Conectando a Metamask...</p>
 
-<div id="listaPedidos"></div>
+<div id="productos"></div>
 
+<h2>🛒 Carrito</h2>
+<div id="carrito"><p>El carrito está vacío.</p></div>
+<button id="vaciarCarrito" disabled>Vaciar carrito</button>
+<button id="confirmarPedido" disabled>Confirmar pedido</button>
 <button onclick="window.history.back()">⬅ Volver atrás</button>
 
 <script src="js/redirect.js"></script>
+<script src="js/abi.js"></script>
 <script src="js/web3.js"></script>
-<script src="js/pedidos_proveedor.js"></script>
+<script src="js/productos_global.js"></script>
+
 
 </body>
 </html>

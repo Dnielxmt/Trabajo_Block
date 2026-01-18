@@ -1,6 +1,6 @@
 // auth_redirigir.js
 (async function() {
-    const direccionContrato = "0x85E7f2Df79f7EE589602c72505Ed3Cf9F82A5210";
+    const direccionContrato = sessionStorage.getItem("direccionContrato");
 
     if (!window.ethereum) {
         alert("⚠️ Instala MetaMask para continuar");
@@ -30,18 +30,27 @@
             // Comprobar rol
             const esProveedor = await contrato.esProveedor(cuentaActual);
             const esSupermercado = await contrato.esSupermercado(cuentaActual);
+            const ownerAddress = await contrato.owner();
+            const esOwner = (cuentaActual.toLowerCase() === ownerAddress.toLowerCase());
+
             //añadir que si es owner redirija a otra pagina
 
             // Redirigir según rol
             if (esProveedor) {
                 console.log("➡️ Proveedor detectado, redirigiendo...");
-                window.location.href = "index_proveedores.html";
+                window.location.href = "perfil_proveedores.html";
                 return;
             }
 
             if (esSupermercado) {
                 console.log("➡️ Supermercado detectado, redirigiendo...");
-                window.location.href = "index.html";
+                window.location.href = "perfil_supermercado.html";
+                return;
+            }
+
+            if (esOwner) {
+                console.log("➡️ Owner detectado, redirigiendo...");
+                window.location.href = "perfil_owner.html";
                 return;
             }
 
