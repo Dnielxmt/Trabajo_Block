@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>DApp B2B Proveedor</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<!-- <body data-rol="Proveedor"> -->
+<body>
+
+<h1>🛠 Sistema Proveedores</h1>
+<p id="cuenta">Conectando a Metamask...</p>
+<div id="reputacionProveedor">
+    ⏳ Cargando reputación del proveedor...
+</div>
+
+<div>
+    <button onclick="irA('productos_proveedor_gestion.html')">🛒 Gestionar Productos</button>
+    <button onclick="irA('pedidos_proveedor.html')">📋 Ver Mis Pedidos</button>
+</div>
+
+<!-- <script src="js/redirect.js"></script> -->
+<script src="js/abi.js"></script>
+<script src="js/web3.js"></script>
+<script src="js/proveedor_home.js"></script>
+
+
+
+<script>
+async function conectarProveedor() {
+    await conectar(); // función global de web3.js
+    document.getElementById("cuenta").innerText = "Conectado como: " + cuentaActual;
+}
+
+function irA(pagina) {
+    window.location.href = pagina;
+}
+
+// Inicializar al cargar
+window.onload = conectarProveedor;
+</script>
+
+</body>
+</html>

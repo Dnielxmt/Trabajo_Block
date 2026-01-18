@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Proveedores</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<!-- <body data-rol="Supermercado"> -->
+<body>
+
+<h1>📦 Proveedores</h1>
+<button id="btnOrdenarReputacion" onclick="ordenarPorReputacion()">🔝 Ordenar por reputación</button>
+<p id="cuenta">Conectando a Metamask...</p>
+
+<div id="listaProveedores"></div>
+
+<button onclick="window.history.back()">⬅ Volver atrás</button>
+
+<!-- Scripts -->
+ <script src="js/redirect.js"></script>
+<script src="js/abi.js"></script>
+<script src="js/web3.js"></script>
+<script src="js/proveedores.js"></script>
+
+
+</body>
+</html>

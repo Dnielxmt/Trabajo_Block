@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Productos</title>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+<style>
+.producto-tarjeta {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+.producto-tarjeta button {
+    margin: 5px;
+}
+</style>
+</head>
+<!-- <body data-rol="Proveedor"> -->
+<body>
+
+<h1>🛒 Mis Productos</h1>
+<p id="cuenta">Conectando a Metamask...</p>
+
+<h2>Crear Nuevo Producto</h2>
+<div>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="descripcion" placeholder="Descripción">
+    <input type="number" id="precio" placeholder="Precio (wei)">
+    <input type="number" id="stock" placeholder="Stock">
+    <button id="crearProductoBtn">Crear Producto</button>
+</div>
+
+<h2>Lista de Productos</h2>
+<div id="productos"></div>
+
+<button onclick="window.history.back()">⬅ Volver atrás</button>
+
+<script src="js/redirect.js"></script>
+<script src="js/abi.js"></script>
+<script src="js/web3.js"></script>
+<script src="js/productos_proveedor_gestion.js"></script>
+
+
+</body>
+</html>
