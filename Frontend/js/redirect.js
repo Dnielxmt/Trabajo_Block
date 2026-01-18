@@ -30,6 +30,7 @@
             // Comprobar rol
             const esProveedor = await contrato.esProveedor(cuentaActual);
             const esSupermercado = await contrato.esSupermercado(cuentaActual);
+            //añadir que si es owner redirija a otra pagina
 
             // Redirigir según rol
             if (esProveedor) {

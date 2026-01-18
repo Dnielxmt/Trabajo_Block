@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil Owner - Gestión DLT</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== SECCIÓN SUPERIOR (Diseño original) ===== */
+        .header {
+            background-color: #2ecc71;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* ===== CONTENIDO PRINCIPAL ===== */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* ===== BOTONES ===== */
+        .btn {
+            padding: 18px 28px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            transition: background-color 0.3s, transform 0.2s;
+            min-width: 220px;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        /* ===== GRUPO DE COLUMNAS ===== */
+        .columns {
+            display: flex;
+            gap: 40px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .column h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* ===== ZONA DE LOGS Y ACCIÓN ===== */
+        #admin-console {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        #logs {
+            background: #222;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            height: 100px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #2ecc71;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .header-link {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="perfil_owner.html" class="header-link">
+            Bienvenido Owner - Panel de Administración
+        </a>
+    </div>
+
+    <div class="main">
+        <div class="panel">
+
+            <button class="btn" onclick="ejecutarCambioDescuento()">
+                ⚙️ Cambiar política de descuento
+            </button>
+
+            <div class="columns">
+
+                <div class="column">
+                    <h3>Supermercado</h3>
+                    <button class="btn" onclick="ejecutarRegistro('supermercado')">
+                        ➕ Crear supermercado
+                    </button>
+                    <button class="btn" onclick="alert('Funcionalidad de borrado no disponible en el contrato actual')">
+                        ❌ Borrar supermercado
+                    </button>
+                </div>
+
+                <div class="column">
+                    <h3>Proveedor</h3>
+                    <button class="btn" onclick="ejecutarRegistro('proveedor')">
+                        ➕ Crear proveedor
+                    </button>
+                    <button class="btn" onclick="alert('Funcionalidad de borrado no disponible en el contrato actual')">
+                        ❌ Borrar proveedor
+                    </button>
+                </div>
+
+            </div>
+
+            <div id="admin-console">
+                <strong>Estado de la red:</strong>
+                <div id="logs">Esperando acciones administrativas en Hyperledger Besu...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>
+            <a href="#">Preguntas frecuentes</a>
+            <a href="normas_owner.html">Normas de la app</a>
+            <a href="#">Ponte en contacto con nosotros</a>
+        </div>
+        <p style="margin-top: 10px; font-size: 12px;">
+            © 2026 Supermercado - Gestión DLT Fase 2
+        </p>
+    </div>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <script src="app_owner.js"></script>
+</body>
+</html>

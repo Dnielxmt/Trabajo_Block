@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso al Sistema - Supermercado DLT</title>
+    <style>
+        body { margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f4f4; display: flex; flex-direction: column; min-height: 100vh; }
+        .header { background-color: #2ecc71; padding: 30px; text-align: center; color: white; font-size: 26px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .footer { background-color: #333; color: white; padding: 20px; text-align: center; }
+        
+        /* Estilos */
+        .auth-box { background-color: white; padding: 40px; border-radius: 12px; max-width: 500px; width: 100%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        .btn-principal { background-color: #3498db; color: white; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-size: 18px; width: 100%; margin-top: 20px; transition: 0.3s; }
+        .btn-principal:hover { background-color: #2980b9; transform: scale(1.02); }
+        .input-blockchain { width: 90%; padding: 12px; margin-top: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        #logs { background: #222; color: #00ff00; padding: 15px; border-radius: 8px; height: 120px; overflow-y: auto; text-align: left; font-family: 'Courier New', monospace; font-size: 13px; margin-top: 20px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">Plataforma Logística Blockchain</div>
+
+    <div class="main">
+        <div id="pantalla-conexion" class="auth-box">
+            <h2>Conectar con la Red Besu</h2>
+            <p>Introduce la dirección del contrato desplegado:</p>
+            <input type="text" id="contract-address" class="input-blockchain" placeholder="0x...">
+            <button id="btn-conectar" class="btn-principal">Conectar MetaMask</button>
+            <div id="logs">Esperando interacción...</div>
+        </div>
+
+        <div id="pantalla-login" class="auth-box hidden">
+            <h2>Identificación de Usuario</h2>
+            <p>Tu Wallet: <br><strong id="user-wallet" style="font-size: 12px;">0x...</strong></p>
+            <div style="background: #e8f8f5; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <p>Rol detectado por Smart Contract:</p>
+                <h3 id="detected-role" style="color: #2ecc71;">Cargando rol...</h3>
+            </div>
+            <button id="btn-confirmar" class="btn-principal">Entrar al Panel</button>
+            <button id="btn-cambiar" style="background:none; border:none; color:#3498db; cursor:pointer; margin-top:10px;">Cambiar de cuenta en MetaMask</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 Supermercado - Gestión DLT Fase 2</p>
+    </div>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
