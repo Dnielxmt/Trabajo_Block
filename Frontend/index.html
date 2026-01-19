@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema Pedidos Supermercado-Proveedor</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input { width: 400px; padding: 5px; margin: 5px 0; }
+    button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    #logs p { margin: 3px 0; }
+    ul { margin: 0; padding-left: 20px; }
+  </style>
+  <!-- ethers.js UMD para navegador -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <script src="js/index.js" defer></script>
+</head>
+<body>
+
+  <h1>Sistema Pedidos Supermercado-Proveedor</h1>
+
+  <h2>Configuración de Usuario</h2>
+  <label>Dirección del contrato:</label><br>
+  <input type="text" id="contractAddressInput" placeholder="0x..."><br>
+  <label>Dirección del proveedor:</label><br>
+  <input type="text" id="proveedorInput" placeholder="0x..."><br>
+  <label>Dirección del supermercado:</label><br>
+  <input type="text" id="supermercadoInput" placeholder="0x..."><br>
+  <button id="connectButton">Conectar MetaMask</button>
+
+  <h2>Estado</h2>
+  <p id="status">No conectado</p>
+
+  <h2>Productos Activos</h2>
+  <ul id="productosList"></ul>
+  <button id="crearPedidoButton">Crear Pedido de Prueba</button>
+
+  <h2>Logs</h2>
+  <div id="logs" style="border:1px solid #ccc; padding:10px; max-height:300px; overflow:auto;"></div>
+
+</body>
+</html>
