@@ -21,7 +21,7 @@ function log(msg) { console.log(msg); }
 // Logout
 function logout() {
     sessionStorage.removeItem("cuentaMetaMask");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }
 
 // Conectar MetaMask y contrato

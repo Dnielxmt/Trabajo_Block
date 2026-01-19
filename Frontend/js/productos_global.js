@@ -194,36 +194,57 @@ document.getElementById("vaciarCarrito").addEventListener("click", () => {
 });
 
 
-// ---------- Confirmar pedido ----------
+// ---------- Confirmar pedido múltiple ----------
 document.getElementById("confirmarPedido").addEventListener("click", async () => {
     if (carrito.length === 0) return alert("Carrito vacío");
 
+    // Map para agrupar productos por proveedor
     const pedidosPorProveedor = {};
 
     carrito.forEach(p => {
-        if (!pedidosPorProveedor[p.proveedor]) {
-            pedidosPorProveedor[p.proveedor] = { ids: [], cantidades: [] };
+        const prov = p.proveedor.toLowerCase(); // Asegúrate de normalizar direcciones
+        if (!pedidosPorProveedor[prov]) {
+            pedidosPorProveedor[prov] = { ids: [], cantidades: [] };
         }
-        pedidosPorProveedor[p.proveedor].ids.push(p.id);
-        pedidosPorProveedor[p.proveedor].cantidades.push(p.cantidad);
+        pedidosPorProveedor[prov].ids.push(Number(p.id));          // convertir a Number puro
+        pedidosPorProveedor[prov].cantidades.push(Number(p.cantidad));
     });
 
+    // Construir arrays de arrays para Solidity
+    const proveedores = [];
+    const idsProductos = [];
+    const cantidades = [];
+
+    for (const prov in pedidosPorProveedor) {
+        proveedores.push(prov);                               // array de direcciones
+        idsProductos.push(pedidosPorProveedor[prov].ids);    // array de array de uint256
+        cantidades.push(pedidosPorProveedor[prov].cantidades); // array de array de uint256
+    }
+
+     // ------------------- PRINTS DE DEBUG -------------------
+    console.log("🔹 Proveedores:", proveedores);
+    console.log("🔹 IDs de productos por proveedor:", idsProductos);
+    console.log("🔹 Cantidades por proveedor:", cantidades);
+    console.log("Arrays listos para enviar a crearPedidosMultiples");
+    // -------------------------------------------------------
+
+
     try {
-        for (const prov in pedidosPorProveedor) {
-            const { ids, cantidades } = pedidosPorProveedor[prov];
-            const tx = await contrato.crearPedido(prov, ids, cantidades);
-            await tx.wait();
-        }
+        // Llamada única a la función múltiple
+        const tx = await contrato.crearPedidosMultiples(proveedores, idsProductos, cantidades);
+        await tx.wait();
 
         alert("✅ Pedidos creados con éxito");
         carrito = [];
         actualizarCarritoUI();
 
     } catch (err) {
-        console.error("Error creando pedido:", err);
-        alert("❌ Error creando pedido");
+        console.error("Error creando pedidos múltiples:", err);
+        alert("❌ Error creando pedidos múltiples");
     }
 });
+
+
 
 
 // ---------- Inicialización ----------

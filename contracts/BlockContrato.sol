@@ -207,12 +207,12 @@ contract SistemaPedidosB2B {
     //-----------------------------------------------------------------------------
 
     // Permite a un supermercado crear un pedido a un proveedor
-    function crearPedido(
+   function _crearPedido(
+        address _supermercado,
         address _proveedor,
         uint256[] calldata _idsProductos,
         uint256[] calldata _cantidades
-    ) external onlySupermercado {
-
+    ) internal {
         require(esProveedor[_proveedor], "Proveedor no autorizado");
         require(_idsProductos.length == _cantidades.length, "Datos inconsistentes");
 
@@ -220,23 +220,19 @@ contract SistemaPedidosB2B {
         Pedido storage p = pedidos[contadorPedidos];
 
         p.id = contadorPedidos;
-        p.supermercado = msg.sender;
+        p.supermercado = _supermercado;
         p.proveedor = _proveedor;
         p.estado = EstadoPedido.Pendiente;
         p.fechaCreacion = block.timestamp;
 
         uint256 totalCantidad = 0;
 
-         // Se verifica que haya stock y que el producto esté activos y se añade cada LineaProducto al pedido
-
         for (uint256 i = 0; i < _idsProductos.length; i++) {
             Producto storage prod = productos[_idsProductos[i]];
             require(prod.activo, "Producto inactivo");
             require(prod.stockDisponible >= _cantidades[i], "Stock insuficiente");
 
-            // DESCONTAR EL STOCK
             prod.stockDisponible -= _cantidades[i];
-
             totalCantidad += _cantidades[i];
 
             p.productos.push(
@@ -247,14 +243,51 @@ contract SistemaPedidosB2B {
             );
         }
 
-        if (totalCantidad >= umbralGranVolumen) { // Aplica un descuento automático si se supera el umbral definido
+        if (totalCantidad >= umbralGranVolumen) {
             p.descuentoAplicado = porcentajeDescuento;
-        } else {
-            p.descuentoAplicado = 0;
         }
 
-        emit PedidoCreado(contadorPedidos, msg.sender, _proveedor, p.descuentoAplicado);
+        emit PedidoCreado(contadorPedidos, _supermercado, _proveedor, p.descuentoAplicado);
     }
+
+    function crearPedido(
+        address _proveedor,
+        uint256[] calldata _idsProductos,
+        uint256[] calldata _cantidades
+    ) external onlySupermercado {
+        _crearPedido(msg.sender, _proveedor, _idsProductos, _cantidades);
+    }
+
+
+    function crearPedidosMultiples(
+        address[] calldata _proveedores,
+        uint256[][] calldata _idsProductosPorProveedor,
+        uint256[][] calldata _cantidadesPorProveedor
+    ) external onlySupermercado {
+
+        require(
+            _proveedores.length == _idsProductosPorProveedor.length &&
+            _proveedores.length == _cantidadesPorProveedor.length,
+            "Longitudes inconsistentes"
+        );
+
+        for (uint256 i = 0; i < _proveedores.length; i++) {
+            require(
+                _idsProductosPorProveedor[i].length ==
+                _cantidadesPorProveedor[i].length,
+                "Productos y cantidades no coinciden"
+            );
+
+            // Llamada interna al método existente
+            _crearPedido(
+                msg.sender,
+                _proveedores[i],
+                _idsProductosPorProveedor[i],
+                _cantidadesPorProveedor[i]
+            );
+        }
+    }
+
 
     function confirmarEnvio(uint256 _idPedido) external onlyProveedor {
         Pedido storage p = pedidos[_idPedido];

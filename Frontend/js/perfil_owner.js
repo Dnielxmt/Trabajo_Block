@@ -31,6 +31,17 @@ window.addEventListener("load", async () => {
         const owner = await contrato.owner();
 
         if (user.toLowerCase() !== owner.toLowerCase()) {
+            const esProveedor = await contrato.esProveedor(user);
+            const esSupermercado = await contrato.esSupermercado(user);
+            if (esProveedor) {
+                console.log("➡️ Proveedor detectado, redirigiendo...");
+                window.location.href = "perfil_proveedores.html";
+            }
+
+            if (esSupermercado) {
+                console.log("➡️ Supermercado detectado, redirigiendo...");
+                window.location.href = "perfil_supermercado.html";
+            }
             alert("Acceso denegado: Solo Owner");
             return;
         }

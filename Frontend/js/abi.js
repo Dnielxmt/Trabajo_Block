@@ -1041,5 +1041,29 @@ const ABI_SISTEMA_PEDIDOS = [
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_proveedores",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "_idsProductosPorProveedor",
+				"type": "uint256[][]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "_cantidadesPorProveedor",
+				"type": "uint256[][]"
+			}
+		],
+		"name": "crearPedidosMultiples",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
+
 ]

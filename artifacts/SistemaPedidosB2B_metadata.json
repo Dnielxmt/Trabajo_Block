@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.31+commit.fd3a2265"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -333,6 +333,29 @@
 					}
 				],
 				"name": "crearPedido",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "_proveedores",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256[][]",
+						"name": "_idsProductosPorProveedor",
+						"type": "uint256[][]"
+					},
+					{
+						"internalType": "uint256[][]",
+						"name": "_cantidadesPorProveedor",
+						"type": "uint256[][]"
+					}
+				],
+				"name": "crearPedidosMultiples",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1067,7 +1090,7 @@
 		"compilationTarget": {
 			"contracts/BlockContrato.sol": "SistemaPedidosB2B"
 		},
-		"evmVersion": "osaka",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -1080,11 +1103,11 @@
 	},
 	"sources": {
 		"contracts/BlockContrato.sol": {
-			"keccak256": "0x1c3567216adeef7b556e96661a51cd7d7c5ddf14a4695d0ef24e3a406680565b",
+			"keccak256": "0x2ad17d012a60d0c634fc6d679191895f0d3c41a9e77d0bfd699db81fe93cb274",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ed3932d00a51eae0d4c29867933f66cf4e6c8fc7745a9f4124e20b162a8661fd",
-				"dweb:/ipfs/QmUgBCgEt77JmG3WdwZ646RNAuM6CjQ5gj25uU5jD6pVBs"
+				"bzz-raw://3293d191d55fcdb10e26ab72bb354fe46258d4fe9ff136b438cb51eb449194f9",
+				"dweb:/ipfs/QmPLey7wQLFRCvgjPNtHmQ95yy2B11pcqcaVQPxav8RzcV"
 			]
 		}
 	},
