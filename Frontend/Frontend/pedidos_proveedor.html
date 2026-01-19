@@ -2,27 +2,26 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Proveedores</title>
+<title>Mis Pedidos - Proveedor</title>
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/abi.js"></script>
 <a href="index.html" style="text-decoration: none; color: #007bff; font-weight: bold;">Login</a>
 </head>
-<!-- <body data-rol="Supermercado"> -->
+<!-- <body data-rol="Proveedor"> -->
 <body>
 
-<h1>📦 Proveedores</h1>
-<button id="btnOrdenarReputacion" onclick="ordenarPorReputacion()">🔝 Ordenar por reputación</button>
+<div class="header">📋 Pedidos Asignados</div>
+
 <p id="cuenta">Conectando a Metamask...</p>
 
-<div id="listaProveedores"></div>
+<div id="listaPedidos"></div>
 
 <button onclick="window.history.back()">⬅ Volver atrás</button>
 
-<!-- Scripts -->
- <script src="js/redirect.js"></script>
-<script src="js/abi.js"></script>
+<script src="js/redirect.js"></script>
 <script src="js/web3.js"></script>
-<script src="js/proveedores.js"></script>
+<script src="js/pedidos_proveedor.js"></script>
 
 
 </body>

@@ -1,0 +1,270 @@
+:root {
+    --primary: #3498db;
+    --primary-dark: #2980b9;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --bg: #f4f6f8;
+    --card-bg: #ffffff;
+    --text: #333;
+    --muted: #777;
+    --radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+h3 {
+    margin: 0 0 10px 0;
+}
+
+
+.header {
+    background: linear-gradient(135deg, var(--success), #27ae60);
+    padding: 30px;
+    text-align: center;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;   
+    align-items: center;       
+    padding: 30px;
+}
+
+.footer {
+    background-color: #222;
+    color: #eee;
+    padding: 15px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    background-color: var(--primary);
+    color: white;
+    transition: all 0.25s ease;
+}
+
+.botones-menu {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.botones-menu button {
+    min-width: 150px;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================
+   TARJETAS GENERALES
+========================= */
+.card,
+.proveedor,
+.producto-tarjeta,
+.pedido-tarjeta,
+.auth-box {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+
+.proveedor {
+    margin-bottom: 15px;
+}
+
+
+.productos-grid,
+#productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.producto-tarjeta {
+    width: 220px;
+    text-align: center;
+    transition: transform 0.25s ease;
+}
+
+.producto-tarjeta:hover {
+    transform: translateY(-4px);
+}
+
+.producto-tarjeta p {
+    margin: 6px 0;
+    color: var(--muted);
+}
+
+
+#carrito {
+    margin-top: 30px;
+    border-top: 2px solid #ddd;
+    padding-top: 20px;
+}
+
+.carrito-item {
+    margin-bottom: 10px;
+}
+
+
+.pedido-tarjeta {
+    margin: 20px 0;
+    transition: transform 0.2s ease;
+}
+
+.pedido-tarjeta:hover {
+    transform: scale(1.02);
+}
+
+.pedido-tarjeta p {
+    margin: 4px 0;
+    color: #555;
+}
+
+
+.estado-pedido {
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: white;
+    display: inline-block;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.estado-Pendiente { background-color: var(--warning); }
+.estado-Enviado   { background-color: var(--primary); }
+.estado-Recibido  { background-color: var(--success); }
+.estado-Cancelado { background-color: var(--danger); }
+
+
+.pedido-tarjeta table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.pedido-tarjeta th,
+.pedido-tarjeta td {
+    padding: 10px;
+    text-align: left;
+}
+
+.pedido-tarjeta th {
+    background-color: #f1f1f1;
+    font-weight: 600;
+}
+
+.pedido-tarjeta tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.pedido-tarjeta tr:hover {
+    background-color: #f0f4f8;
+}
+
+.pedido-tarjeta td:last-child,
+.pedido-tarjeta th:last-child {
+    text-align: right;
+}
+
+
+.totales {
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.totales p {
+    margin: 4px 0;
+}
+
+
+.auth-box {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+.input-blockchain {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #ddd;
+}
+
+.btn-principal {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+#logs {
+    background: #1e1e1e;
+    color: #00ff88;
+    padding: 15px;
+    border-radius: var(--radius);
+    height: 140px;
+    overflow-y: auto;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    margin-top: 20px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+#cuenta {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
