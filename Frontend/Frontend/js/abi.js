@@ -1,149 +1,5 @@
 const ABI_SISTEMA_PEDIDOS = [
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idProducto",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_nuevoPrecio",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_nuevoStock",
-				"type": "uint256"
-			}
-		],
-		"name": "actualizarProducto",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idPedido",
-				"type": "uint256"
-			}
-		],
-		"name": "cancelarPedido",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_umbral",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_porcentaje",
-				"type": "uint256"
-			}
-		],
-		"name": "configurarPoliticaDescuentos",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idPedido",
-				"type": "uint256"
-			}
-		],
-		"name": "confirmarEnvio",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idPedido",
-				"type": "uint256"
-			}
-		],
-		"name": "confirmarRecepcion",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_proveedor",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "_idsProductos",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "_cantidades",
-				"type": "uint256[]"
-			}
-		],
-		"name": "crearPedido",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_nombre",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_descripcion",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_precio",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_stock",
-				"type": "uint256"
-			}
-		],
-		"name": "crearProducto",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_idProducto",
-				"type": "uint256"
-			}
-		],
-		"name": "eliminarProducto",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
@@ -296,32 +152,6 @@ const ABI_SISTEMA_PEDIDOS = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_proveedor",
-				"type": "address"
-			}
-		],
-		"name": "registrarProveedor",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_supermercado",
-				"type": "address"
-			}
-		],
-		"name": "registrarSupermercado",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -333,6 +163,29 @@ const ABI_SISTEMA_PEDIDOS = [
 		],
 		"name": "SupermercadoRegistrado",
 		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idProducto",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_nuevoPrecio",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_nuevoStock",
+				"type": "uint256"
+			}
+		],
+		"name": "actualizarProducto",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -373,6 +226,63 @@ const ABI_SISTEMA_PEDIDOS = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idPedido",
+				"type": "uint256"
+			}
+		],
+		"name": "cancelarPedido",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_umbral",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_porcentaje",
+				"type": "uint256"
+			}
+		],
+		"name": "configurarPoliticaDescuentos",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idPedido",
+				"type": "uint256"
+			}
+		],
+		"name": "confirmarEnvio",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idPedido",
+				"type": "uint256"
+			}
+		],
+		"name": "confirmarRecepcion",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "contadorPedidos",
 		"outputs": [
@@ -396,6 +306,93 @@ const ABI_SISTEMA_PEDIDOS = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_proveedor",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_idsProductos",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "_cantidades",
+				"type": "uint256[]"
+			}
+		],
+		"name": "crearPedido",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "_proveedores",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "_idsProductosPorProveedor",
+				"type": "uint256[][]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "_cantidadesPorProveedor",
+				"type": "uint256[][]"
+			}
+		],
+		"name": "crearPedidosMultiples",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_nombre",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_descripcion",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_precio",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_stock",
+				"type": "uint256"
+			}
+		],
+		"name": "crearProducto",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_idProducto",
+				"type": "uint256"
+			}
+		],
+		"name": "eliminarProducto",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1009,6 +1006,32 @@ const ABI_SISTEMA_PEDIDOS = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_proveedor",
+				"type": "address"
+			}
+		],
+		"name": "registrarProveedor",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_supermercado",
+				"type": "address"
+			}
+		],
+		"name": "registrarSupermercado",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -1041,29 +1064,5 @@ const ABI_SISTEMA_PEDIDOS = [
 		],
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address[]",
-				"name": "_proveedores",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint256[][]",
-				"name": "_idsProductosPorProveedor",
-				"type": "uint256[][]"
-			},
-			{
-				"internalType": "uint256[][]",
-				"name": "_cantidadesPorProveedor",
-				"type": "uint256[][]"
-			}
-		],
-		"name": "crearPedidosMultiples",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	}
-
 ]
