@@ -230,6 +230,7 @@ contract SistemaPedidosB2B {
         for (uint256 i = 0; i < _idsProductos.length; i++) {
             Producto storage prod = productos[_idsProductos[i]];
             require(prod.activo, "Producto inactivo");
+            require(prod.proveedor == _proveedor, "Producto no pertenece al proveedor");
             require(prod.stockDisponible >= _cantidades[i], "Stock insuficiente");
 
             prod.stockDisponible -= _cantidades[i];
