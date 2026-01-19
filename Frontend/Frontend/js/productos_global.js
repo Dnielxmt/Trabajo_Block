@@ -1,6 +1,6 @@
 // js/productos_global.js
 let carrito = [];
-const WEI_A_EURO = 1; // Ajusta según el precio del ether
+// const WEI_A_EURO = 1;
 
 
 // ---------- Conexión ----------
@@ -131,8 +131,8 @@ function actualizarCarritoUI() {
                 <th>Producto</th>
                 <th>Proveedor</th>
                 <th>Cantidad</th>
-                <th>Precio €</th>
-                <th>Subtotal €</th>
+                <th>Precio (wei)</th>
+                <th>Subtotal (wei)</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
@@ -147,12 +147,16 @@ function actualizarCarritoUI() {
         totalWei += subtotalWei;
 
         const tr = document.createElement("tr");
+        // <td>${(Number(p.precio) * WEI_A_EURO).toFixed(2)} €</td>
+        // <td>${(Number(subtotalWei) * WEI_A_EURO).toFixed(2)} €</td>
         tr.innerHTML = `
             <td>${p.nombre}</td>
             <td>${acortarDireccion(p.proveedor)}</td>
             <td>${p.cantidad}</td>
-            <td>${(Number(p.precio) * WEI_A_EURO).toFixed(2)} €</td>
-            <td>${(Number(subtotalWei) * WEI_A_EURO).toFixed(2)} €</td>
+            
+            <td>${p.precio} wei</td>
+            <td>${subtotalWei} wei</td>
+
             <td>
                 <button data-id="${p.id}" data-proveedor="${p.proveedor}">
                     ❌
@@ -164,8 +168,9 @@ function actualizarCarritoUI() {
 
     productosDiv.appendChild(tabla);
 
+    //  <p><strong>Total aprox:</strong> ${(Number(totalWei) * WEI_A_EURO).toFixed(2)} €</p>
     totalesDiv.innerHTML = `
-        <p><strong>Total aprox:</strong> ${(Number(totalWei) * WEI_A_EURO).toFixed(2)} €</p>
+        <p><strong>Total:</strong> ${totalWei} wei</p>
     `;
 
     // Eliminar producto
@@ -216,9 +221,9 @@ document.getElementById("confirmarPedido").addEventListener("click", async () =>
     const cantidades = [];
 
     for (const prov in pedidosPorProveedor) {
-        proveedores.push(prov);                               // array de direcciones
-        idsProductos.push(pedidosPorProveedor[prov].ids);    // array de array de uint256
-        cantidades.push(pedidosPorProveedor[prov].cantidades); // array de array de uint256
+        proveedores.push(prov);                               
+        idsProductos.push(pedidosPorProveedor[prov].ids);    
+        cantidades.push(pedidosPorProveedor[prov].cantidades); 
     }
 
      // ------------------- PRINTS DE DEBUG -------------------

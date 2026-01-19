@@ -1,4 +1,5 @@
 // js/pedidos.js
+const WEI_A_ETH = 1e18; // 1 ETH = 10^18 wei
 
 window.addEventListener("DOMContentLoaded", async () => {
     await conectar(); // Conecta Metamask y el contrato
@@ -104,8 +105,8 @@ async function mostrarMisPedidos() {
                         <tr>
                             <th style="text-align:left; border-bottom:1px solid #ddd;">Producto</th>
                             <th style="text-align:right; border-bottom:1px solid #ddd;">Cantidad</th>
-                            <th style="text-align:right; border-bottom:1px solid #ddd;">Precio €</th>
-                            <th style="text-align:right; border-bottom:1px solid #ddd;">Subtotal €</th>
+                            <th style="text-align:right; border-bottom:1px solid #ddd;">Precio (wei)</th>
+                            <th style="text-align:right; border-bottom:1px solid #ddd;">Subtotal (wei)</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -139,11 +140,12 @@ async function mostrarMisPedidos() {
             const totalSinDescuento = await contrato.calcularTotalSinDescuento(pId);
 
             totalesDiv.innerHTML = `
-                <p>Total sin descuento: ${totalSinDescuento} €</p>
-                <p><strong>Total Final (aplicando descuento):</strong> ${totalConDescuento} €</p>
+                <p>Total sin descuento: ${totalSinDescuento} wei (~${(Number(totalSinDescuento)/WEI_A_ETH).toFixed(6)} ETH)</p>
+                <p><strong>Total Final (aplicando descuento):</strong> ${totalConDescuento} wei (~${(Number(totalConDescuento)/WEI_A_ETH).toFixed(6)} ETH)</p>
             `;
 
             // ------------------ Botones según rol y estado ------------------
+            // Solo mostrar botones si la cuenta puede actuar
             if (esSuper && estado === 1) {
                 const btnRecibido = document.createElement("button");
                 btnRecibido.innerText = "✅ Marcar como recibido";
@@ -181,8 +183,8 @@ async function mostrarMisPedidos() {
                 accionesDiv.appendChild(btnEnviado);
             }
 
-            // ------------------ Botón Cancelar pedido ------------------
-            if ((esSuper || esProv) && estado === 0) { // Pendiente
+            // ------------------ Botón Cancelar pedido seguro ------------------
+            if ((esSuper || esProv) && estado === 0) { // Solo si pendiente
                 const btnCancelar = document.createElement("button");
                 btnCancelar.innerText = "❌ Cancelar";
                 btnCancelar.style.position = "absolute";
@@ -199,18 +201,25 @@ async function mostrarMisPedidos() {
                     if (!confirm("¿Seguro que quieres cancelar este pedido?")) return;
 
                     try {
+                        // Verificación rápida antes de enviar tx
+                        const detalleCheck = await contrato.obtenerDetallePedido(pId);
+                        const estadoActual = Number(detalleCheck[2]);
+                        if (estadoActual !== 0) {
+                            alert("❌ Este pedido ya no puede cancelarse (no está pendiente).");
+                            return;
+                        }
+
                         const tx = await contrato.cancelarPedido(pId);
                         await tx.wait();
                         alert("✅ Pedido cancelado correctamente");
                         await mostrarMisPedidos();
                     } catch (err) {
                         console.error("Error cancelando pedido:", err);
-                        alert("❌ Error cancelando pedido. Mira la consola.");
+                        alert("❌ No se pudo cancelar el pedido. Mira la consola.");
                     }
                 };
 
-                // Necesitamos que la tarjeta tenga position: relative para posicionar el botón
-                tarjeta.style.position = "relative";
+                tarjeta.style.position = "relative"; // necesario para el botón absoluto
                 tarjeta.appendChild(btnCancelar);
             }
         }

@@ -3,7 +3,7 @@
 // Conexión y detección de rol
 // ---------------------------
 
-const contractABI = ABI_SISTEMA_PEDIDOS; // tu ABI
+const contractABI = ABI_SISTEMA_PEDIDOS;
 let provider, signer, contrato, userAddress;
 
 const contractInput = document.getElementById("contract-address");

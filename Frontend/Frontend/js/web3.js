@@ -10,10 +10,10 @@ let contrato;
 const direccionContrato = sessionStorage.getItem("direccionContrato");
 
 async function conectar() {
-    if (contrato) return; // ⬅ ya conectado
+    if (contrato) return; // ya conectado
 
     if (!window.ethereum) {
-        alert("⚠️ Instala Metamask para usar esta DApp");
+        alert("⚠️ Instala Metamask para usar esta Interfaz para la Gestión DLT");
         return;
     }
 

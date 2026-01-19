@@ -32,8 +32,8 @@ async function cargarProveedores() {
 
             proveedoresLista.push({
                 proveedor: p,
-                completados,   // BigInt
-                cancelados     // BigInt
+                completados,   
+                cancelados     
             });
         }
 

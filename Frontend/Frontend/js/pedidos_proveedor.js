@@ -1,4 +1,6 @@
 // js/pedidos_proveedor.js
+const WEI_A_ETH = 1e18; // 1 ETH = 10^18 wei
+
 
 window.addEventListener("DOMContentLoaded", async () => {
     await conectar();
@@ -128,12 +130,16 @@ async function cargarLineasPedido(idPedido) {
             totalPedido += subtotal;
 
             const fila = document.createElement("tr");
+            // <td>${ethers.formatEther(precio)} ETH</td>
+            //     <td>${cantidad} unidades</td>
+            //     <td>${ethers.formatEther(subtotal)} ETH</td>
             fila.innerHTML = `
                 <td>${prod.nombre}</td>
                 <td>${prod.descripcion}</td>
-                <td>${ethers.formatEther(precio)} ETH</td>
+                <td>${precio} wei (~${(Number(precio)/WEI_A_ETH).toFixed(6)} ETH)</td>
                 <td>${cantidad} unidades</td>
-                <td>${ethers.formatEther(subtotal)} ETH</td>
+                <td>${subtotal} wei (~${(Number(subtotal)/WEI_A_ETH).toFixed(6)} ETH)</td>
+
             `;
             tabla.appendChild(fila);
         }
@@ -148,9 +154,13 @@ async function cargarLineasPedido(idPedido) {
 
         const totalDiv = document.createElement("div");
         totalDiv.style.marginTop = "10px";
+        // totalDiv.innerHTML = `
+        //     <p><b>Total sin descuento:</b> ${ethers.formatEther(totalPedido)} ETH</p>
+        //     <p><b>Total con descuento (${descuento}%):</b> ${ethers.formatEther(totalConDescuento)} ETH</p>
+        // `;
         totalDiv.innerHTML = `
-            <p><b>Total sin descuento:</b> ${ethers.formatEther(totalPedido)} ETH</p>
-            <p><b>Total con descuento (${descuento}%):</b> ${ethers.formatEther(totalConDescuento)} ETH</p>
+        <p><b>Total sin descuento:</b> ${totalPedido} wei (~${(Number(totalPedido)/WEI_A_ETH).toFixed(6)} ETH)</p>
+        <p><b>Total con descuento (${descuento}%):</b> ${totalConDescuento} wei (~${(Number(totalConDescuento)/WEI_A_ETH).toFixed(6)} ETH)</p>
         `;
         cont.appendChild(totalDiv);
 

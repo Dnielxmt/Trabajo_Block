@@ -1,7 +1,7 @@
 // js/carrito.js
 
 let carrito = [];
-const ETH_A_EURO = 0.0003; // ejemplo de conversión 1 wei → € (ajustar según tu tasa real)
+const ETH_A_EURO = 0.0003;
 
 // ---------- Agregar al carrito ----------
 function agregarAlCarrito(producto) {
@@ -112,7 +112,6 @@ document.getElementById("confirmar-pedido").addEventListener("click", async () =
 
     console.log("✅ Pedido a crear:", { proveedor: proveedorSeleccionado, ids, cantidades });
 
-    // Aquí deberías usar contrato.crearPedido si quieres enviar a blockchain
     alert(`🎉 Pedido creado con éxito con ${carrito.length} productos`);
 
     carrito = [];

@@ -4,19 +4,10 @@ let provider, signer, cuentaActual, contrato;
 let carrito = [];
 let proveedorSeleccionado;
 
-// const direccionContrato = "0x4a6762EC197F7C8cC79775cc34733986f89615cc";
-// const direccionContrato = "0x02EBc01250D6931d985B0D0409B862357371F4DB";
-// const direccionContrato = "0x85E7f2Df79f7EE589602c72505Ed3Cf9F82A5210";
-// const direccionContrato = sessionStorage.getItem("direccionContrato");
 const direccionContrato = sessionStorage.getItem("direccionContrato");
-// console.log("🔹 Dirección del contrato desde sesión:", direccionContrato);
-// if (!direccionContrato || !ethers.utils.isAddress(direccionContrato)) {
-//     alert("No hay contrato guardado. Vuelve al login.");
-//     window.location.href = "login.html";
-//     return;
-// }
 
-const ETH_TO_EURO = 1; // Ajusta según la tasa de conversión
+
+const ETH_TO_EURO = 1; 
 
 // ---------- Conexión a Metamask ----------
 async function conectar() {
@@ -107,6 +98,7 @@ function añadirAlCarrito(producto) {
     actualizarCarritoUI();
 }
 
+// ---------- Actualizar carrito UI con formato tipo global ----------
 async function actualizarCarritoUI() {
     const cont = document.getElementById("carrito");
     cont.innerHTML = "";
@@ -118,28 +110,43 @@ async function actualizarCarritoUI() {
         return;
     }
 
-    // Crear tabla
+    // Tarjeta contenedora
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "pedido-tarjeta";
+
+    tarjeta.innerHTML = `
+        <h3>Carrito del proveedor</h3>
+        <div class="productos"></div>
+        <div class="totales"></div>
+    `;
+    cont.appendChild(tarjeta);
+
+    const productosDiv = tarjeta.querySelector(".productos");
+    const totalesDiv = tarjeta.querySelector(".totales");
+
+    // Tabla de productos
     const tabla = document.createElement("table");
     tabla.style.width = "100%";
     tabla.style.borderCollapse = "collapse";
     tabla.innerHTML = `
         <thead>
             <tr>
-                <th style="text-align:left; border-bottom:1px solid #ddd;">Producto</th>
-                <th style="text-align:right; border-bottom:1px solid #ddd;">Cantidad</th>
-                <th style="text-align:right; border-bottom:1px solid #ddd;">Precio unitario (wei)</th>
-                <th style="text-align:right; border-bottom:1px solid #ddd;">Subtotal (wei)</th>
-                <th style="border-bottom:1px solid #ddd;"></th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio (wei)</th>
+                <th>Subtotal (wei)</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody></tbody>
     `;
     const tbody = tabla.querySelector("tbody");
-    let totalCarrito = 0n;
+
+    let totalWei = 0n;
 
     carrito.forEach(p => {
-        const subtotal = p.precio * BigInt(p.cantidad);
-        totalCarrito += subtotal;
+        const subtotal = p.precio * p.cantidad;
+        totalWei += subtotal;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -147,27 +154,22 @@ async function actualizarCarritoUI() {
             <td style="text-align:right;">${p.cantidad}</td>
             <td style="text-align:right;">${p.precio}</td>
             <td style="text-align:right;">${subtotal}</td>
-            <td style="text-align:center;"><button data-id="${p.id}">❌</button></td>
+            <td style="text-align:center;">
+                <button data-id="${p.id}">❌</button>
+            </td>
         `;
         tbody.appendChild(tr);
     });
 
-    cont.appendChild(tabla);
+    productosDiv.appendChild(tabla);
 
-    // Total carrito
-    const totalDiv = document.createElement("div");
-    totalDiv.style.marginTop = "10px";
-    totalDiv.style.fontWeight = "bold";
-
-    // Si quieres, aquí podrías obtener el total real del contrato:
-    // const totalConDescuento = await contrato.calcularTotalPedidoParaProveedor(proveedorSeleccionado);
-    totalDiv.innerHTML = `
-        Total carrito: ${totalCarrito.toString()} wei (~${(Number(ethers.formatEther(totalCarrito)) * ETH_TO_EURO).toFixed(2)} €)
+    // Totales
+    totalesDiv.innerHTML = `
+        <p><strong>Total:</strong> ${totalWei} wei</p>
     `;
-    cont.appendChild(totalDiv);
 
-    // Botones eliminar producto de la tabla
-    cont.querySelectorAll("button").forEach(btn => {
+    // Eliminar producto
+    productosDiv.querySelectorAll("button").forEach(btn => {
         btn.addEventListener("click", () => {
             const id = BigInt(btn.dataset.id);
             carrito = carrito.filter(p => p.id !== id);
@@ -178,6 +180,7 @@ async function actualizarCarritoUI() {
     document.getElementById("vaciarCarrito").disabled = false;
     document.getElementById("confirmarPedido").disabled = false;
 }
+
 
 // ---------- Vaciar carrito ----------
 document.getElementById("vaciarCarrito").addEventListener("click", () => {
