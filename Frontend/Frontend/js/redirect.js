@@ -12,6 +12,11 @@
         const provider = new ethers.BrowserProvider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
         const signer = await provider.getSigner();
+
+        // provider = new ethers.providers.Web3Provider(window.ethereum);
+        // await provider.send("eth_requestAccounts", []);
+        // signer = provider.getSigner();
+
         // Esperar 100 ms antes de obtener la cuenta
         //await new Promise(resolve => setTimeout(resolve, 20));
         const cuentaActual = window.ethereum.selectedAddress;

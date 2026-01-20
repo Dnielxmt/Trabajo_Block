@@ -73,6 +73,16 @@ async function ejecutarRegistro(tipo) {
             ? await contrato.registrarProveedor(address)
             : await contrato.registrarSupermercado(address);
 
+        // let tx;
+
+        // if (tipo === "proveedor") {
+        //     tx = await contrato.registrarProveedor(address);
+        // } else {
+        //     tx = await contrato.registrarSupermercado(address, {
+        //         value: ethers.utils.parseEther("1.0") 
+        //     });
+        // }
+
         await tx.wait();
         log(`✅ ${tipo} registrado correctamente`);
 

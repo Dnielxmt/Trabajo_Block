@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.20+commit.a1b79de6"
+		"version": "0.8.31+commit.fd3a2265"
 	},
 	"language": "Solidity",
 	"output": {
@@ -1090,7 +1090,7 @@
 		"compilationTarget": {
 			"contracts/BlockContrato.sol": "SistemaPedidosB2B"
 		},
-		"evmVersion": "london",
+		"evmVersion": "osaka",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -1103,11 +1103,11 @@
 	},
 	"sources": {
 		"contracts/BlockContrato.sol": {
-			"keccak256": "0x8849e63c2acacc9fc481153dca05661969a06450d75e1dd0b0bc27fa45df7c9f",
+			"keccak256": "0x85fc386df57cc5610e5280340d78d8cc05ad579c429a9fd14d610c47c17b18c2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://aad6da7f7122dfa37bcb378b689c80566075c1691b4ab07698bd81079952f782",
-				"dweb:/ipfs/QmaK4uCMaDHueZyjKCqt1d9LXJZzSxJHzqzDAZeUb4knVp"
+				"bzz-raw://bc68854c3cd2f0d530fc42ecb7676907e83209883427d26592b6d7bcf73eb075",
+				"dweb:/ipfs/QmQ7StT2nUgmsVZacU6jT34WG2Xxd1bTAAyVH7ZL32uCFb"
 			]
 		}
 	},

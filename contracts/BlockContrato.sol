@@ -178,7 +178,7 @@ contract SistemaPedidosB2B {
     }
 
     
-    
+    // Permite a un proveedor actualizar un producto
     function actualizarProducto(
         uint256 _idProducto,
         uint256 _nuevoPrecio,
@@ -193,6 +193,7 @@ contract SistemaPedidosB2B {
         emit ProductoActualizado(_idProducto);
     }
 
+    // Permite a un proveedor eliminar producto
     function eliminarProducto(uint256 _idProducto) external onlyProveedor {
         Producto storage p = productos[_idProducto];
         require(p.proveedor == msg.sender, "No eres el propietario");
@@ -207,7 +208,7 @@ contract SistemaPedidosB2B {
     //-----------------------------------------------------------------------------
 
     // Permite a un supermercado crear un pedido a un proveedor
-   function _crearPedido(
+    function _crearPedido(
         address _supermercado,
         address _proveedor,
         uint256[] calldata _idsProductos,
@@ -233,7 +234,7 @@ contract SistemaPedidosB2B {
             require(prod.proveedor == _proveedor, "Producto no pertenece al proveedor");
             require(prod.stockDisponible >= _cantidades[i], "Stock insuficiente");
 
-            prod.stockDisponible -= _cantidades[i];
+            prod.stockDisponible -= _cantidades[i]; // control stock
             totalCantidad += _cantidades[i];
 
             p.productos.push(
@@ -245,12 +246,13 @@ contract SistemaPedidosB2B {
         }
 
         if (totalCantidad >= umbralGranVolumen) {
-            p.descuentoAplicado = porcentajeDescuento;
+            p.descuentoAplicado = porcentajeDescuento; // para aplicar descuneto
         }
 
         emit PedidoCreado(contadorPedidos, _supermercado, _proveedor, p.descuentoAplicado);
     }
 
+    // Permite SOLO a supermercado crear un pedido a un proveedor
     function crearPedido(
         address _proveedor,
         uint256[] calldata _idsProductos,
@@ -260,6 +262,7 @@ contract SistemaPedidosB2B {
     }
 
 
+    // Permite a supermercado crear un pedido con productos de distintos proveedores -> creará un pedido por proveedor
     function crearPedidosMultiples(
         address[] calldata _proveedores,
         uint256[][] calldata _idsProductosPorProveedor,
@@ -289,7 +292,7 @@ contract SistemaPedidosB2B {
         }
     }
 
-
+    // Función confirmar Envio por parte del proveedor
     function confirmarEnvio(uint256 _idPedido) external onlyProveedor {
         Pedido storage p = pedidos[_idPedido];
         require(p.proveedor == msg.sender, "No eres el proveedor asignado");
@@ -299,6 +302,7 @@ contract SistemaPedidosB2B {
         emit PedidoEnviado(_idPedido);
     }
 
+    // Función confirmar Recibido por parte del supermercado
     function confirmarRecepcion(uint256 _idPedido) external onlySupermercado {
         Pedido storage p = pedidos[_idPedido];
         require(p.supermercado == msg.sender, "No eres el supermercado");
@@ -310,6 +314,7 @@ contract SistemaPedidosB2B {
         emit PedidoRecibido(_idPedido);
     }
 
+    // Función para el Cancelado por parte del supermercado
     function cancelarPedido(uint256 _idPedido) external onlySupermercado {
         Pedido storage p = pedidos[_idPedido];
         require(p.supermercado == msg.sender, "No autorizado");
@@ -404,7 +409,7 @@ contract SistemaPedidosB2B {
         Producto[] memory lista = new Producto[](cantidad);
         uint256 index = 0;
 
-        // Llenar array
+        // Llenar 
         for (uint256 i = 1; i <= total; i++) {
             if (
                 productos[i].activo &&
@@ -466,29 +471,7 @@ contract SistemaPedidosB2B {
         return lista;
     }
 
-    // function obtenerPedido(uint256 _idPedido)
-    // external
-    // view
-    // returns (
-    //     address supermercado,
-    //     address proveedor,
-    //     EstadoPedido estado,
-    //     uint256 descuento,
-    //     uint256 fecha,
-    //     LineaProducto[] memory productos){
-        
-    //     Pedido storage p = pedidos[_idPedido];
-
-    //     return (
-    //         p.supermercado,
-    //         p.proveedor,
-    //         p.estado,
-    //         p.descuentoAplicado,
-    //         p.fechaCreacion,
-    //         p.productos
-    //     );
-    // }
-
+    // Función para calcularTotalPedido aplicando descuento
     function calcularTotalPedido(uint256 _idPedido) external view returns (uint256 total) {
         Pedido storage p = pedidos[_idPedido];
 
@@ -504,6 +487,7 @@ contract SistemaPedidosB2B {
         }
     }
 
+    // Función para calcularTotalPedido sin aplicar el descuento (para ver la diferenica)
     function calcularTotalSinDescuento(uint256 _idPedido) external view returns (uint256 total) {
         Pedido storage p = pedidos[_idPedido];
 
@@ -518,7 +502,7 @@ contract SistemaPedidosB2B {
 
 
 
-    // NUEVAS FUNCIONES PLANAS DE PEDIDOS
+    //FUNCIONES PLANAS DE PEDIDOS -> necesarias para acceder directamente a las caracteristicas de los pedidos, no obj
     function obtenerPedidosPorSupermercadoPlano(address _supermercado) external view returns (
         uint256[] memory ids,
         address[] memory proveedores,
