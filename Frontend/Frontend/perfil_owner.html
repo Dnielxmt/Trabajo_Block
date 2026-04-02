@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión DLT</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="header">
+        Panel Owner – Sistema de Pedidos B2B
+    </div>
+
+    <div class="main">
+        <div class="panel">
+        <div class="card" style="max-width: 500px; text-align: center;">
+            <div class="botones-menu">
+                <button class="btn" onclick="ejecutarCambioDescuento()">⚙️ Cambiar política de descuento</button>
+
+            
+      
+
+            <button class="btn" onclick="ejecutarRegistro('supermercado')">
+                ➕ Registrar Supermercado
+            </button>
+
+            <button class="btn" onclick="ejecutarRegistro('proveedor')">
+                ➕ Registrar Proveedor
+            </button>
+
+            </div>
+            <hr>
+            <a href="index.html" style="font-weight: bold; color: #3498db;">
+                🔐 Volver al Login
+            </a>
+
+            <div id="logs">Esperando conexión con MetaMask...</div>
+
+
+        </div>
+        
+        
+            
+
+        </div>
+    </div>
+
+    <!-- ETHERS v6 -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+    <script src="js/redirect.js"></script>
+    <script src="js/abi.js"></script>
+    <script src="js/perfil_owner.js"></script>
+
+</body>
+</html>

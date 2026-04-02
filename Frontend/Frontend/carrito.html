@@ -1,0 +1,41 @@
+<button onclick="window.history.back()">⬅ Volver</button>
+<h2>Carrito</h2>
+
+<body onload="mostrarCarrito()">
+<h2>Carrito</h2>
+<div id="carrito"></div>
+<button onclick="crearPedido()">Confirmar pedido</button>
+
+<script src="js/redirect.js"></script>
+<script src="js/web3.js"></script>
+<script src="js/contrato.js"></script>
+<script src="js/carrito.js"></script>
+
+<button onclick="window.history.back()">⬅ Volver</button>
+
+<script>
+async function mostrarCarrito() {
+    const carrito = obtenerCarrito();
+    document.getElementById("carrito").innerText =
+        JSON.stringify(carrito, null, 2);
+}
+
+async function crearPedido() {
+    await conectarWallet();
+    cargarContrato();
+
+    const carrito = obtenerCarrito();
+    const ids = carrito.productos.map(p => p.idProducto);
+    const cantidades = carrito.productos.map(p => p.cantidad);
+
+    await contrato.crearPedido(
+        carrito.proveedor,
+        ids,
+        cantidades
+    );
+
+    vaciarCarrito();
+    alert("Pedido creado");
+}
+</script>
+</body>
